@@ -1,0 +1,8 @@
+<h2><span ng-hide="authData">Signin</span><span ng-show="authData">Signed in as: {{displayName}}</span></h2>
+<img ng-if="authData" ng-src="{{photoURL}}" alt="">
+<button type="button" name="button" ng-hide="authData" ng-click="signin()">
+  Sign in with Google
+</button>
+<button type="button" name="button" ng-show="authData" ng-click="signout()">
+  signout
+</button>

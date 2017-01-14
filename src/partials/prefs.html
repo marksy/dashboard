@@ -1,0 +1,139 @@
+<h2>prefs</h2>
+<h2><span ng-show="authData">Signed in as: {{displayName}}</span></h2>
+
+<button type="button" name="signout" ng-click="signout()">signout</button>
+<hr>
+<h3>Active modules:</h3>
+<ul>
+  <li ng-repeat="item in objMods.modules track by $index">
+    <input type="checkbox"
+     ng-change="updateModel()" ng-checked="item.active" ng-model="item.active" name="{{item.name}}" id="module-{{item.name}}">
+    <label for="module-{{item.name}}">{{item.name}}</label>
+    <div ng-repeat="pico in item.data track by $index">
+      <ul>
+        <li ng-repeat="(key,pair) in pico track by $index">
+          <label for="sub-item-{{key}}">{{key}}</label>
+
+          <!-- if the data is a string: -->
+          <div ng-if="
+            key === 'location' ||
+            key === 'foreignCurrency' ||
+            key === 'localCurrency' ||
+            key === 'user' ||
+            key === 'key' ||
+            key === 'lines'
+          ">
+            <input type="text" name="sub-item-{{key}}" id="sub-item-{{key}}" value="{{pair}}" ng-disabled="!item.active">
+          </div>
+
+          <!-- if the data is boolean-->
+          <div ng-if="
+            key === 'standardUnit' ||
+            key === 'tubeFaults'
+          ">
+            <input type="checkbox" ng-checked="{{pair}}" ng-model="key" name="sub-item-{{key}}" id="sub-item-{{key}}" value="{{pair}}" ng-disabled="!item.active">
+          </div>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<!-- <ul>
+  <li ng-repeat="item in modules">
+    <input
+      type="checkbox"
+      name="toggle-{{item.name}}"
+      id="toggle-{{item.name}}"
+      value="{{item.name}}"
+      ng-checked="item.active"
+      ng-model="item.active">
+    <label for="toggle-{{item.name}}">{{item.name}}</label>
+  </li>
+</ul> -->
+
+<hr>
+
+<section ng-show="modules[0].active">
+  <h4>{{modules[0].name}}</h4>
+  <ul>
+    <li>
+      <label for="weather-location">Location:</label>
+      <input type="text" name="weather-location" id="weather-location" value="London, UK">
+    </li>
+    <li>
+      <label for="weather-celcius">˚C</label>
+      <input type="radio" id="weather-celcius" name="weather-units" value="" ng-checked="true">
+      <label for="weather-farenheight">˚F</label>
+      <input type="radio" id="weather-farenheight" name="weather-units" value="">
+    </li>
+  </ul>
+  <button type="button" name="button">Save</button>
+</section>
+
+<section ng-show="modules[1].active">
+  <h4>strava</h4>
+  <ul>
+    <li>
+      <label for="strava-location">User:</label>
+      <input type="text" name="weather-location" id="weather-location" value="1294120">
+    </li>
+    <button type="button" name="button">Add another user...</button>
+  </ul>
+  <button type="button" name="button">Save</button>
+</section>
+
+<section ng-show="modules[2].active">
+  <h4>transport</h4>
+  <ul>
+    <li>
+      <label for="transport-origin">Origin:</label>
+      <input type="text" name="transport-origin" id="transport-origin" value="SE23 2AA">
+    </li>
+    <li>
+      <label for="transport-destination">Destination:</label>
+      <input type="text" name="transport-destination" id="transport-destination" value="SE1 9DY">
+    </li>
+  </ul>
+  <button type="button" name="button">Save</button>
+</section>
+
+<section ng-show="modules[3].active">
+  <h4>photos</h4>
+  <ul>
+    <li>
+      <label for="photos-user">User:</label>
+      <input type="text" name="photos-user" id="photos-user" value="marksy">
+    </li>
+  </ul>
+  <button type="button" name="button">Save</button>
+</section>
+
+<section ng-show="modules[4].active">
+  <h4>XE</h4>
+  <ul>
+    <li>
+      <label for="xe-local">Local:</label>
+      <input type="text" name="xe-local" id="xe-local" value="GBP">
+    </li>
+    <li>
+      <label for="xe-foreign">Foreign:</label>
+      <input type="text" name="xe-foreign" id="xe-foreign" value="NZD">
+    </li>
+  </ul>
+  <button type="button" name="button">Save</button>
+</section>
+
+<section ng-show="modules[5].active">
+  <h4>shopping list</h4>
+  <ul>
+    <li>
+      <label for="list-url">Data source:</label>
+      <input type="text" name="" value="http://data.marksy.com/list.json">
+    </li>
+    <li>
+      <label for="list-show-complete">Show completed?</label>
+      <input type="checkbox" name="" value="">
+    </li>
+  </ul>
+  <button type="button" name="button">Save</button>
+</section>

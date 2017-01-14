@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.2.0/angularfire.min.js"></script>
+    <script src="assets/scripts/bundle.js"></script>
+  </head>
+  <body ng-app="app">
+
+    <!-- <div class="" ng-controller="MyCtrl as ctrl">
+      <p>hello my name is {{ctrl.object.name}}</p>
+      <p>i like {{ctrl.object.animal}}</p>
+    </div> -->
+
+    <ul>
+      <li><a ui-sref="home">home</a></li>
+      <li><a ui-sref="prefs">prefs</a></li>
+    </ul>
+
+    <ui-view></ui-view>
+    <p id="beer">cat</p>
+
+  </body>
+</html>
