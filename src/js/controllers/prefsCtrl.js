@@ -39,53 +39,33 @@
                   {
                     name: "weather",
                     active: true,
-                    data: [
-                      {
-                        location: "London, uk",
-                        standardUnit: true
-                      }
-                    ]
+                    location: "London, uk",
+                    unit: "c"
                   },
                   {
                     name: "tfl",
                     active: false,
-                    data: [
-                      {
-                        tubeFaults: true,
-                        lines: [
-                          'Victoria',
-                          'london-overgound'
-                        ]
-                      }
+                    tubeFaults: true,
+                    lines: [
+                      "Victoria",
+                      "london-overground"
                     ]
                   },
                   {
                     name: "finance",
                     active: false,
-                    data: [
-                      {
-                        localCurrency: "GBP",
-                        foreignCurrency: "NZD"
-                      }
-                    ]
+                    localCurrency: "GBP",
+                    foreignCurrency: "NZD"
                   },
                   {
                     name: "twitter",
                     active: false,
-                    data: [
-                      {
-                        user: "BBCBreakingNews"
-                      }
-                    ]
+                    user: "BBCBreakingNews"
                   },
                   {
                     name: "strava",
                     active: false,
-                    data: [
-                      {
-                        key: "54b0e167486e9e58b52d9b1a73b5471e24c5cf58"
-                      }
-                    ]
+                    key: "54b0e167486e9e58b52d9b1a73b5471e24c5cf58"
                   }
                 ]
               };
