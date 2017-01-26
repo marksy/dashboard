@@ -1,7 +1,37 @@
-<h2>home</h2>
-<ul>
-  <li ng-repeat="item in modules" ng-show="item.active">
-    <p>{{item.name}}</p>
-    <strong>{{item.active}}</strong>
-  </li>
-</ul>
+<article>
+  <h1 class="heading-2" ng-hide="true">home</h1>
+  <img src="{{photoURL}}" alt="{{displayName}}" title="{{displayName}}" class="user-avatar">
+  <ul ng-show="authData">
+    <li class="panel" ng-show="objMods.modules[0].active">
+      <p>weather for {{objMods.modules[0].location}}</p>
+      <p>Sunny, <span class="failure">high: -2˚</span>, <span class="info">low: -18˚</span>, wind 6 mph</p>
+    </li>
+    <li class="panel" ng-show="objMods.modules[1].active">
+      <p class="success" ng-show="objMods.modules[1].tubeFaults">No problems with tube.</p>
+      <p ng-show="objMods.modules[1].lines[0].origin !== ''">Next trains from <span class="train-line info">{{objMods.modules[1].lines[0].origin}}</span> going to <span class="train-line failure">{{objMods.modules[1].lines[0].destination}}</span></p>
+      <ul>
+        <li>7.53am</li>
+        <li class="warning">8.23am (delayed)</li>
+        <li>8.33am</li>
+      </ul>
+    </li>
+    <li class="panel" ng-show="objMods.modules[2].active">
+      <p>1 {{objMods.modules[2].localCurrency}} is trading at 1.012 {{objMods.modules[2].foreignCurrency}} <i class="fa fa-caret-down failure"></i></p>
+
+    </li>
+    <li class="panel" ng-show="objMods.modules[3].active">
+      <p>twitter: {{objMods.modules[3].user}}</p>
+    </li>
+    <li class="panel" ng-show="objMods.modules[4].active">
+      <p>strava: {{objMods.modules[4].key}}</p>
+    </li>
+
+    <!-- <li ng-repeat="item in objMods.modules track by $index" ng-show="item.active">
+      <p>{{item.name}}
+        <span ng-if="item.name === 'weather'">for {{item.location}}</span>
+        <span ng-if="item.name === 'tfl'">for the lines:</span>
+        <ul ng-if="item.name === 'tfl'"> <li ng-repeat="zip in item.lines track by $index">hi</li></ul>
+      </p>
+    </li> -->
+  </ul>
+</article>

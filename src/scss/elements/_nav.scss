@@ -1,0 +1,44 @@
+//nav.scss
+
+nav {
+  display: block;
+  margin-bottom: 50px;
+  font-size: 20px;
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1%;
+  }
+
+  li {
+    display: inline-block;
+    font-size: 1em;
+    // border: 1px solid darken($white, 30);
+    // border-radius: $radius;
+
+    a {
+      padding: 20px;
+      display: block;
+    }
+
+    &.time-date {
+      color: $white;
+      padding: 0 2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .time {
+        font-size: 25px;
+      }
+      .date {
+        font-size: 15px;
+      }
+    }
+    &.active {
+      opacity: .1;
+    }
+  }
+}

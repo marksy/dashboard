@@ -47,8 +47,10 @@
                     active: false,
                     tubeFaults: true,
                     lines: [
-                      "Victoria",
-                      "london-overground"
+                      {
+                        origin: "Catford Bridge",
+                        destination: "London Charing Cross",
+                      }
                     ]
                   },
                   {

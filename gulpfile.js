@@ -22,6 +22,7 @@
   const plumber = require('gulp-plumber');// monkey-patch for occurs in gulp sometimes, apparently
   const rename = require('gulp-rename'); // file renamer
   const source = require('vinyl-source-stream'); // Use conventional text streams with Gulp
+
   const sass = require('gulp-sass'); //build Sass
   const sourcemaps = require('gulp-sourcemaps'); //adds sourcemaps to files
 
@@ -33,6 +34,7 @@
       html: './src/**/*.html',
       css: './src/css/',
       js: './src/js/**/*.js',
+      fonts: './src/fonts/**/*.*',
       sass: './src/scss/**/*.scss',
       dist: './dist'
     },
@@ -83,6 +85,20 @@
       .pipe(connect.reload());
   });
 
+  gulp.task('sass', () => {
+      gulp.src(config.paths.sass)
+        .pipe(sourcemaps.init())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(config.paths.dist + '/assets/css/'))
+        .pipe(connect.reload());
+  });
+
+  gulp.task('fonts', () => {
+    return gulp.src(config.paths.fonts)
+      .pipe(gulp.dest(config.paths.dist + '/assets/fonts/'));
+  });
+
   gulp.task('html', () => {
     return gulp.src(config.paths.html)
       .pipe(gulp.dest(config.paths.dist + ''))
@@ -92,11 +108,14 @@
 
   gulp.task('watch', () => {
     gulp.watch(config.paths.html, ['html']);
+    gulp.watch(config.paths.sass, ['sass']);
     gulp.watch(config.paths.js, ['js', 'jshint']);
   });
 
   gulp.task('default', [
     'js',
+    'fonts',
+    'sass',
     'html',
     'open',
     'watch'

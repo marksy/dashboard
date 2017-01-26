@@ -1,0 +1,8 @@
+.panel {
+  max-width: 992px;
+  background-color: lighten($obsidian, 5);
+  border: 1px solid $black;
+  border-radius: $radius;
+  padding: 2em;
+  margin: 0 auto;
+}

@@ -1,0 +1,13 @@
+.user {
+  &-avatar {
+    max-width: 64px;
+    border-radius: 50%;
+    border: 1px solid $black;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    box-shadow: 1px 2px 15px $black;
+    opacity: .8;
+    z-index: 100;
+  }
+}

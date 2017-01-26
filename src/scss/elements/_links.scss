@@ -1,0 +1,7 @@
+a {
+  color: $white;
+  opacity: 1;
+  &:hover {
+    opacity: .7;
+  }
+}
