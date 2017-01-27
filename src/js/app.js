@@ -10,6 +10,10 @@
 
   const app = angular.module('app', ['ui.router', 'firebase']);
 
+  const dateTime = require('./utilities/dateTime.js');
+
+  // const weatherSvc = require('./services/weatherSvc.js');
+
   const MyCtrl = require('./controllers/myCtrl.js');
   const HomeCtrl = require('./controllers/homeCtrl.js');
   const LoginCtrl = require('./controllers/loginCtrl.js');

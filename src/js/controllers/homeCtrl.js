@@ -3,10 +3,11 @@
 
   let app = angular.module('app');
 
-  app.controller('HomeCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', function($scope, $state, $firebaseAuth, $firebaseObject) {
+  app.controller('HomeCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval) {
     console.log('HomeCtrl');
 
     let auth = $firebaseAuth();
+    let currentLocation;
 
     auth.$onAuthStateChanged(function(authData) {
       $scope.authData = authData;
@@ -28,6 +29,10 @@
             console.log('s',s.val());
             if(s.val() !== null) {
               $scope.objMods = s.val();
+
+              currentLocation = $scope.objMods.modules[0].location;
+              console.log("currentLocation",currentLocation);
+
             } else {
               //create a blank model
               $scope.objMods = {
@@ -70,6 +75,31 @@
             }
             $scope.$apply();
             console.log('objMods', $scope.objMods);
+
+            let key = 'a01445a972f04947b49150500172701';
+            let weatherUrl = 'http://api.apixu.com/v1/current.json?key=' + key + '&q=' + currentLocation;
+
+            let fetchWeather = () => {
+              $http({
+                method: 'GET',
+                url: weatherUrl
+              }).then(function successCallback(response) {
+                  console.log('success name', response.data.current);
+                  $scope.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
+                  $scope.weatherData = response.data.current;
+
+                }, function errorCallback(response) {
+                  console.log('error', response);
+                });
+            };
+
+            fetchWeather();
+
+            $interval(function(){
+              console.log('getting latest weather...');
+              fetchWeather();
+            }, 1800000);
+
           }).catch(function(error) {
             console.log(error);
           });
@@ -79,7 +109,6 @@
 
       }
     });
-
 
   }]);
 })();

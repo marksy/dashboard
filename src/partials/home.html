@@ -3,8 +3,9 @@
   <img src="{{photoURL}}" alt="{{displayName}}" title="{{displayName}}" class="user-avatar">
   <ul ng-show="authData">
     <li class="panel" ng-show="objMods.modules[0].active">
-      <p>weather for {{objMods.modules[0].location}}</p>
-      <p>Sunny, <span class="failure">high: -2˚</span>, <span class="info">low: -18˚</span>, wind 6 mph</p>
+      <p>weather for {{weatherLocation}}</p>
+      <p ng-if="objMods.modules[0].unit === 'c'">{{weatherData.condition.text}}, {{weatherData.temp_c}}˚c, wind {{weatherData.wind_kph}} kph<span ng-if="weatherData.precip_mm !== 0">, rain {{weatherData.precip_mm}}mm</span></p>
+      <p ng-if="objMods.modules[0].unit === 'f'">{{weatherData.condition.text}}, {{weatherData.temp_f}}˚f, wind {{weatherData.wind_mph}} mph<span ng-if="weatherData.precip_in !== 0">, rain {{weatherData.precip_in}}"</span></p>
     </li>
     <li class="panel" ng-show="objMods.modules[1].active">
       <p class="success" ng-show="objMods.modules[1].tubeFaults">No problems with tube.</p>
