@@ -1,6 +1,6 @@
 <article>
   <h1 class="heading-2" ng-hide="true">home</h1>
-  <img src="{{photoURL}}" alt="{{displayName}}" title="{{displayName}}" class="user-avatar">
+  <img ng-src="{{photoURL}}" ng-cloak alt="{{displayName}}" title="{{displayName}}" class="user-avatar">
   <ul ng-show="authData">
     <li class="panel" ng-show="objMods.modules[0].active">
       <p>weather for {{weatherLocation}}</p>
