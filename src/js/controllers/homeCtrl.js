@@ -9,6 +9,20 @@
     let auth = $firebaseAuth();
     let currentLocation;
 
+    function updateIndicator() {
+      if(navigator.onLine) {
+      	$scope.systemOnline = true;
+        console.log('online');
+      } else {
+        $scope.systemOnline = false;
+        console.log('offline');
+      }
+      // $scope.$apply();
+    }
+    window.addEventListener('online',  updateIndicator);
+    window.addEventListener('offline', updateIndicator);
+    updateIndicator();
+
     auth.$onAuthStateChanged(function(authData) {
       $scope.authData = authData;
 

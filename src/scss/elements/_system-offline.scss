@@ -1,0 +1,8 @@
+.system-offline {
+  color: $yellow;
+  font-size: 2em;
+  text-shadow: 0 0 13px $yellow;
+  position: fixed;
+  top: 68px;
+  right: calc(50% - 10px);
+}
