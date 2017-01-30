@@ -77,27 +77,50 @@
             console.log('objMods', $scope.objMods);
 
             let key = 'a01445a972f04947b49150500172701';
-            let weatherUrl = 'http://api.apixu.com/v1/current.json?key=' + key + '&q=' + currentLocation;
+            // let currentWeatherUrl = 'http://api.apixu.com/v1/current.json?key=' + key + '&q=' + currentLocation;
+            let forecastWeatherUrl = 'http://api.apixu.com/v1/forecast.json?key=' + key + '&q=' + currentLocation;
 
-            let fetchWeather = () => {
+            // let fetchCurrentWeather = () => {
+            //     $scope.loadingWeatherData = true;
+            //   $http({
+            //     method: 'GET',
+            //     url: currentWeatherUrl
+            //   }).then(function successCallback(response) {
+            //       console.log('success fetchCurrentWeather', response.data.current);
+            //       $scope.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
+            //       $scope.weatherData = response.data.current;
+            //       $scope.loadingWeatherData = false;
+            //
+            //     }, function errorCallback(response) {
+            //       console.log('error', response);
+            //       $scope.loadingWeatherData = false;
+            //     });
+            // };
+
+            let fetchForecastWeather = () => {
+                $scope.loadingWeatherData = true;
               $http({
                 method: 'GET',
-                url: weatherUrl
+                url: forecastWeatherUrl
               }).then(function successCallback(response) {
-                  console.log('success name', response.data.current);
+                  console.log('success fetchForecastWeather', response.data);
                   $scope.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
                   $scope.weatherData = response.data.current;
+                  $scope.loadingWeatherData = false;
 
                 }, function errorCallback(response) {
                   console.log('error', response);
+                  $scope.loadingWeatherData = false;
                 });
             };
 
-            fetchWeather();
+            // fetchCurrentWeather();
+            fetchForecastWeather();
 
             $interval(function(){
               console.log('getting latest weather...');
-              fetchWeather();
+              // fetchCurrentWeather();
+              fetchForecastWeather();
             }, 1800000);
 
           }).catch(function(error) {
