@@ -25,6 +25,8 @@
 
   const sass = require('gulp-sass'); //build Sass
   const sourcemaps = require('gulp-sourcemaps'); //adds sourcemaps to files
+  const postcss = require('gulp-postcss'); //does stuff to css after its been gen.
+  const autoprefixer = require('autoprefixer'); //auto prefixes old css
 
   const config = {
     port: 9005,
@@ -73,7 +75,7 @@
         debug: true
     });
 
-    bundler.transform(babelify);
+    bundler.transform(babelify, {presets: ["es2015"]});
     bundler.bundle()
       .on('error', (err) => { console.error(err); })
       .pipe(source('bundle.js'))
@@ -89,6 +91,7 @@
       gulp.src(config.paths.sass)
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
+        .pipe(postcss([ autoprefixer() ]))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(config.paths.dist + '/assets/css/'))
         .pipe(connect.reload());
