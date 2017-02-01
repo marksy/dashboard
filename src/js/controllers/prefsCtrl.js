@@ -1,16 +1,50 @@
 (function() {
   'use strict';
 
-  let app = angular.module('app');
+  const app = angular.module('app');
 
-  app.controller('prefsCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', function($scope, $state, $firebaseAuth, $firebaseObject) {
+  app.controller('prefsCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', ($scope, $state, $firebaseAuth, $firebaseObject) => {
     console.log('prefsCtrl object: ');
 
     // let rootRef = firebase.database().ref().child('users');
     // let ref = rootRef.child('116196474336917056939');
     // let obj = $firebaseObject(ref);
 
-    let auth = $firebaseAuth();
+    const rando = (arr) => {
+      return arr[Math.floor(Math.random() * arr.length)];
+    };
+
+    const auth = $firebaseAuth();
+    const greetings = [
+      'hello there',
+      'Oi OI',
+      'alright',
+      'bonjour',
+      'hiiii',
+      'hej',
+      'sup',
+      'wagwan'
+    ];
+    $scope.greeting = rando(greetings);
+
+    $scope.stations = [
+      {
+        name: "Forest Hill",
+        code: "910GFORESTH",
+      },
+      {
+        name: "Honor Oak",
+        code: "910GHONROPK",
+      },
+      {
+        name: "Catford",
+        code: "910GCATFORD",
+      },
+      {
+        name: "Catford Bridge",
+        code: "910GCATFBDG",
+      }
+    ];
 
     auth.$onAuthStateChanged(function(authData) {
       $scope.authData = authData;
@@ -23,7 +57,7 @@
         $scope.displayName = authData.providerData[0].displayName;
         $scope.photoURL = authData.providerData[0].photoURL;
 
-        let getUserData = function() {
+        const getUserData = function() {
           let currentUser = firebase.database().ref().child('/users/' + userId);
           let userExists = $firebaseObject(firebase.database().ref().child('/users/' + userId));
           console.log('userExists', userExists);
@@ -46,12 +80,7 @@
                     name: "tfl",
                     active: false,
                     tubeFaults: true,
-                    lines: [
-                      {
-                        origin: "Catford Bridge",
-                        destination: "London Charing Cross",
-                      }
-                    ]
+                    lines: "910GFORESTH"
                   },
                   {
                     name: "finance",
@@ -80,8 +109,8 @@
         };
         getUserData();
 
-        $scope.updateModel = () => {
-          let model = $scope.objMods;
+        $scope.updateModel = function() {
+          const model = $scope.objMods;
           firebase.database().ref('users/' + userId).set(model);
           console.log('model', $scope.objMods);
         };
@@ -89,7 +118,7 @@
     });
 
 
-    $scope.signout = () => {
+    $scope.signout = function() {
       console.log('clicked signout');
       auth.$signOut();
     };

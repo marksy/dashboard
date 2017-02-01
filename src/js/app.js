@@ -11,6 +11,8 @@
   const app = angular.module('app', ['ui.router', 'firebase']);
 
   const dateTime = require('./utilities/dateTime.js');
+  const cleanStation = require('./utilities/cleanStationName.js');
+  const cleanLine = require('./utilities/cleanLineName.js');
 
   // const weatherSvc = require('./services/weatherSvc.js');
 

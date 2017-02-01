@@ -1,13 +1,12 @@
 <article class="panel">
-  <h2 class="heading-2">prefs</h2>
-  <h3><span ng-show="authData">Signed in as: {{displayName}}</span></h3>
+  <h3><span ng-show="authData">{{greeting}} {{displayName}}</span></h3>
 
   <button type="button" name="signout" ng-click="signout()">signout</button>
   <hr>
   <h3>Active modules:</h3>
-  <ul>
+  <ul class="modules">
   <!-- weather -->
-    <li>
+    <li class="module">
       <input type="checkbox"
        ng-change="updateModel()" ng-checked="objMods.modules[0].active" ng-model="objMods.modules[0].active" name="weather" id="module-weather">
       <label for="module-weather">weather</label>
@@ -38,7 +37,7 @@
       </div>
     </li>
   <!-- transport -->
-    <li>
+    <li class="module">
       <input type="checkbox"
        ng-change="updateModel()" ng-checked="objMods.modules[1].active" ng-model="objMods.modules[1].active" name="tfl" id="module-tfl">
       <label for="module-tfl">tfl</label>
@@ -50,17 +49,23 @@
           </li>
           <li>
             <label for="tfl-line-origin">origin</label>
-            <input type="text" name="tfl-line-origin" id="tfl-line-origin"  value="{{objMods.modules[1].lines[0].origin}}" ng-model="objMods.modules[1].lines[0].origin" ng-change="updateModel()" ng-disabled="!objMods.modules[1].active">
-          </li>
-          <li>
-            <label for="tfl-line-destination">destination</label>
-            <input type="text" name="tfl-line-destination" id="tfl-line-destination"  value="{{objMods.modules[1].lines[0].destination}}" ng-model="objMods.modules[1].lines[0].destination" ng-change="updateModel()" ng-disabled="!objMods.modules[1].active">
+            <!--<select ng-model="objMods.modules[1].lines" ng-change="updateModel()">
+              <option ng-repeat="station in stations" ng-value="station.code">{{station.name}}</option> -->
+            <select
+              ng-model="objMods.modules[1].lines"
+              ng-options="station.code as station.name for station in stations"
+              ng-name="tfl-line-origin"
+              ng-change="updateModel()"
+              ng-disabled="!objMods.modules[1].active">
+            </select>
+            <!-- <label for="tfl-line-origin">origin</label>
+            <input type="text" name="tfl-line-origin" id="tfl-line-origin"  value="{{objMods.modules[1].lines[0].origin}}" ng-model="objMods.modules[1].lines[0].origin" ng-change="updateModel()" ng-disabled="!objMods.modules[1].active"> -->
           </li>
         </ul>
       </div>
     </li>
   <!-- currency -->
-    <li>
+    <li class="module">
       <input type="checkbox"
        ng-change="updateModel()" ng-checked="objMods.modules[2].active" ng-model="objMods.modules[2].active" name="weather" id="module-currency">
       <label for="module-currency">Currency</label>
@@ -78,7 +83,7 @@
       </div>
     </li>
     <!-- twitter -->
-    <li>
+    <li class="module">
       <input type="checkbox"
        ng-change="updateModel()" ng-checked="objMods.modules[3].active" ng-model="objMods.modules[3].active" name="weather" id="module-twitter">
       <label for="module-twitter">Twitter</label>
@@ -92,7 +97,7 @@
       </div>
     </li>
     <!-- strava -->
-    <li>
+    <li class="module">
       <input type="checkbox"
        ng-change="updateModel()" ng-checked="objMods.modules[4].active" ng-model="objMods.modules[4].active" name="weather" id="module-strava">
       <label for="module-strava">strava</label>

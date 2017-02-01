@@ -1,11 +1,11 @@
 (function() {
   'use strict';
 
-  let app = angular.module('app');
+  const app = angular.module('app');
 
-  app.controller('loginCtrl', ['$scope', '$state', '$firebaseAuth', function($scope, $state, $firebaseAuth) {
+  app.controller('loginCtrl', ['$scope', '$state', '$firebaseAuth', ($scope, $state, $firebaseAuth) => {
     console.log('login');
-    let auth = $firebaseAuth();
+    const auth = $firebaseAuth();
 
     console.log(auth);
 
@@ -20,7 +20,7 @@
       }
     });
 
-    $scope.signin = () => {
+    $scope.signin = function() {
       console.log('clicked sign in ');
       auth.$signInWithPopup("google").catch(function(error) {
         console.log("Authentication failed:", error);
@@ -30,11 +30,11 @@
         }, 2000);
       });
     };
-
-    $scope.signout = () => {
-      console.log('clicked signout');
-      auth.$signOut();
-    };
+    // 
+    // $scope.signout = function() {
+    //   console.log('clicked signout');
+    //   auth.$signOut();
+    // };
 
   }]);
 })();

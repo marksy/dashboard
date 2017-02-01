@@ -1,0 +1,15 @@
+.module {
+  border-bottom: 1px solid transparentize($grey, .8);
+  margin-bottom: 2em;
+  > div {
+    padding: 2em;
+  }
+
+  > input[type="checkbox"] ~ div {
+    opacity: .3;
+  }
+  > input[type="checkbox"]:checked ~ div {
+    opacity: 1;
+  }
+
+}

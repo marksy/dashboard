@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
-  let app = angular.module('app');
+  const app = angular.module('app');
 
-  app.controller('signupCtrl', ['$scope', function($scope) {
+  app.controller('signupCtrl', ['$scope', ($scope) => {
     console.log('signupCtrl');
 
   }]);
