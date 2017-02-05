@@ -33,19 +33,20 @@
 
     msg = "Beer o'clock " + moment(date).fromNow();
 
+
     if(msg === "Beer o'clock in 3 hours") {
       msg = "Beer o'clock in <span class='flash'>3 hours!</span>";
     }
     if(msg === "Beer o'clock in 2 hours") {
-      msg = "Beer o'clock in <span class='flash'>2 hours!!</span>";
+      msg = "Beer o'clock in <span class='flash'>2 hours!! 🍺</span>";
     }
     if(msg === "Beer o'clock in 1 hour") {
-      msg = "Beer o'clock in <span class='flash'>1 hour!!!</span>";
+      msg = "Beer o'clock in <span class='flash'>1 hour!!! 🍺🍻</span>";
     }
-    if(msg === "Beer o'clock in 3 minutes" ||
-    msg === "Beer o'clock in 2 minutes" ||
-    msg === "Beer o'clock in 1 minute" ) {
-      msg = "HOLY SHIT. Beer o'clock <span class='flash'>in a few minutes!!!!!!1</span>";
+    if(msg === "Beer o'clock in 3 minutes 🍺🍺🍺🍺" ||
+    msg === "Beer o'clock in 2 minutes 🍺🍺🍺🍺🍺🍺" ||
+    msg === "Beer o'clock in 1 minute 🍺🍺🍺🍺🍺🍺🍺🍺" ) {
+      msg = "HOLY SHIT. Beer o'clock <span class='flash'>in a few minutes!!!!!!1🍻🍻</span>🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺";
     }
 
     setTimeout(function() {

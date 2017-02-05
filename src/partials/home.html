@@ -31,14 +31,30 @@
 
     </li>
     <li class="panel" ng-show="objMods.modules[2].active">
-      <p>1 {{objMods.modules[2].localCurrency}} is trading at 1.012 {{objMods.modules[2].foreignCurrency}} <i class="fa fa-caret-down failure"></i></p>
+      <p>&pound;1 {{objMods.modules[2].localCurrency}} is trading at ${{currencyNZD}} NZD <i class="fa fa-caret-down failure"></i></p>
+      <p>&pound;1 {{objMods.modules[2].localCurrency}} is trading at ${{currencyUSD}} USD <i class="fa fa-caret-up success"></i></p>
 
     </li>
     <li class="panel" ng-show="objMods.modules[3].active">
       <p>twitter: {{objMods.modules[3].user}}</p>
     </li>
     <li class="panel" ng-show="objMods.modules[4].active">
-      <p>strava: {{objMods.modules[4].key}}</p>
+      <p>Latest Strava results for Mark</p>
+      <ul class="activities">
+        <li ng-repeat="activity in stravaData | limitTo: 2" class="activity">
+          <ul>
+            <li><p>{{activity.start_date | date: 'EEE d MMM yyyy, h:mm a'}}</p></li>
+            <li><p>Type: {{activity.type}}</p></li>
+            <li><p>Total time: {{activity.elapsed_time}}</p></li>
+            <li><p>Distance: {{activity.distance}}</p></li>
+            <li><p>Average speed: {{activity.average_speed}} mph</p></li>
+            <li><p>Max speed: {{activity.max_speed}} mph</p></li>
+            <li><p>Kilojoules: {{activity.kilojoules}}</p></li>
+            <li ng-if="activity.has_heartrate"><p>Average HR: {{activity.average_heartrate}} bpm</p></li>
+            <li ng-if="activity.has_heartrate"><p>Max HR: {{activity.max_heartrate}} bpm</p></li>
+          </ul>
+        </li>
+      </ul>
     </li>
 
     <!-- <li ng-repeat="item in objMods.modules track by $index" ng-show="item.active">

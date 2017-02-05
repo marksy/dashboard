@@ -3,7 +3,7 @@
 
   let app = angular.module('app');
 
-  app.controller('HomeCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval) {
+  app.controller('HomeCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce) {
     console.log('HomeCtrl');
 
     const auth = $firebaseAuth();
@@ -58,7 +58,7 @@
                 modules: [
                   {
                     name: "weather",
-                    active: true,
+                    active: false,
                     location: "London, uk",
                     unit: "c"
                   },
@@ -91,38 +91,23 @@
             console.log('objMods', $scope.objMods);
 
             const key = 'a01445a972f04947b49150500172701';
-            // let currentWeatherUrl = 'http://api.apixu.com/v1/current.json?key=' + key + '&q=' + currentLocation;
+            if(currentLocation === undefined) {
+              currentLocation = 'London';
+            }
             let forecastWeatherUrl = 'http://api.apixu.com/v1/forecast.json?key=' + key + '&q=' + currentLocation;
-
-            // let fetchCurrentWeather = () => {
-            //     $scope.loadingWeatherData = true;
-            //   $http({
-            //     method: 'GET',
-            //     url: currentWeatherUrl
-            //   }).then(function successCallback(response) {
-            //       console.log('success fetchCurrentWeather', response.data.current);
-            //       $scope.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
-            //       $scope.weatherData = response.data.current;
-            //       $scope.loadingWeatherData = false;
-            //
-            //     }, function errorCallback(response) {
-            //       console.log('error', response);
-            //       $scope.loadingWeatherData = false;
-            //     });
-            // };
 
             const fetchForecastWeather = function() {
               $scope.loadingWeatherData = true;
               $http({
                 method: 'GET',
                 url: forecastWeatherUrl
-              }).then(function successCallback(response) {
+              }).then(function(response) {
                   console.log('success fetchForecastWeather', response.data);
                   $scope.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
                   $scope.weatherData = response.data.current;
                   $scope.loadingWeatherData = false;
 
-                }, function errorCallback(response) {
+                }, function(response) {
                   console.log('error', response);
                   $scope.loadingWeatherData = false;
                 });
@@ -137,11 +122,16 @@
               fetchForecastWeather();
             }, 1800000);
 
+
+
             const tflAppId = '81fc2bab';
             const tflAppKey = '2a45b9bd5d4a3699ccc79338d8bec6e7';
             let tflMode = 'StopPoint'; //Line
             let tflStopPoint = trainLine;// 910GCATFORD / 910GCATFBDG / 910GFORESTH
-            let tflUrl = 'https://api.tfl.gov.uk/' + tflMode + '/' + tflStopPoint  + '/arrivals' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
+            if(tflStopPoint === undefined) {
+              tflStopPoint = '910GFORESTH';
+            }
+            let tflUrl = 'https://api.tfl.gov.uk/' + tflMode + '/' + tflStopPoint + '/arrivals' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
             let tube = 'https://api.tfl.gov.uk/line/mode/tube/status' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
 
             const getTFLStatus = function() {
@@ -153,7 +143,6 @@
                   console.log('success TFL', data);
                   $scope.trainsArriving = data.data;
                   $scope.stationName = data.data[0].stationName;
-                  console.log('$scope.stationName',$scope.stationName);
                 }, function errorCallback(error) {
                   console.log('error', error);
                 });
@@ -176,6 +165,65 @@
               getTFLStatus();
             }, 60000);
 
+
+            let stravaAT = '54b0e167486e9e58b52d9b1a73b5471e24c5cf58';
+            let stravaUrl = 'https://www.strava.com/api/v3/athlete/activities?access_token=' + stravaAT;
+            $sce.trustAsResourceUrl(stravaUrl);
+
+            const getStrava = function() {
+              $http({
+                method: 'GET',
+                url: stravaUrl
+              }).then(function(response) {
+                  console.log('stravaUrl success',response);
+                  $scope.stravaData = response.data;
+                }, function(response) {
+                  console.log('stravaUrl fail',response);
+              });
+            };
+            getStrava();
+
+            const financeNZDCurrency = 'NZD';
+            const financeGBPCurrency = 'GBP';
+            const financeUSDCurrency = 'USD';
+            let financeBaseCurrency = financeGBPCurrency;
+            const financeUrl = 'http://api.fixer.io/';
+            let financeLatest = financeUrl + 'latest?symbols=' + financeUSDCurrency + ',' + financeNZDCurrency + '&base=' + financeBaseCurrency;
+            $sce.trustAsResourceUrl(financeLatest);
+
+            const getCurrency = function() {
+              $http({
+                method: 'GET',
+                url: financeLatest
+              }).then(function(response) {
+                $scope.currencyNZD = response.data.rates.NZD;
+                $scope.currencyUSD = response.data.rates.USD;
+                $scope.currencyNZDcopy = angular.copy($scope.currencyNZD);
+
+                console.log('currency', $scope.currencyNZD);
+              }, function(response) {
+                console.log('error', response);
+              });
+            };
+            getCurrency();
+            $interval(function(){
+              console.log('getting latest finance...');
+              $scope.currencyNZDCopy = angular.copy($scope.currencyNZD);
+              console.log('currencyNZD', $scope.currencyNZD);
+              console.log('currencyNZDCopy', $scope.currencyNZDCopy);
+              getCurrency();
+              console.log('then after getCurrency...');
+              console.log('currencyNZD', $scope.currencyNZD);
+              console.log('currencyNZDCopy', $scope.currencyNZDCopy);
+              // if($scope.currencyNZD > $scope.currencyNZDCopy) {
+              //   // fall
+              // }
+              // else if($scope.currencyNZD < $scope.currencyNZDCopy) {
+              //   // rise
+              // } else {
+              //   // same
+              // }
+            }, 60000 * 60);//ever hour
 
           }).catch(function(error) {
             console.log(error);

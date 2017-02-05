@@ -72,7 +72,7 @@
                 modules: [
                   {
                     name: "weather",
-                    active: true,
+                    active: false,
                     location: "London, uk",
                     unit: "c"
                   },
