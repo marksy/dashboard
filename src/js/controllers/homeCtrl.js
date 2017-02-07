@@ -71,13 +71,14 @@
                   {
                     name: "finance",
                     active: false,
-                    localCurrency: "GBP",
-                    foreignCurrency: "NZD"
+                    baseCurrency: "GBP",
+                    currencyOne: "NZD",
+                    currencyTwo: "USD"
                   },
                   {
                     name: "twitter",
                     active: false,
-                    user: "BBCBreakingNews"
+                    user: "BBCBreaking"
                   },
                   {
                     name: "strava",
@@ -116,11 +117,11 @@
             // fetchCurrentWeather();
             fetchForecastWeather();
 
-            $interval(function(){
+            const repeatWeather = $interval(function(){
               console.log('getting latest weather...');
               // fetchCurrentWeather();
               fetchForecastWeather();
-            }, 1800000);
+            }, 900000); //15 mins
 
 
 
@@ -159,11 +160,14 @@
             };
             getTFLStatus();
 
-            $interval(function(){
-              console.log('getting latest trains...');
+            const repeatTFL = $interval(function(){
+              console.log('repeatTFL: getting latest trains...' + new Date());
               // fetchCurrentWeather();
               getTFLStatus();
-            }, 60000);
+            }, 60000); // every minute
+
+
+
 
 
             let stravaAT = '54b0e167486e9e58b52d9b1a73b5471e24c5cf58';
@@ -183,12 +187,20 @@
             };
             getStrava();
 
-            const financeNZDCurrency = 'NZD';
-            const financeGBPCurrency = 'GBP';
-            const financeUSDCurrency = 'USD';
-            let financeBaseCurrency = financeGBPCurrency;
+            const repeatStrava = $interval(function(){
+              getStrava();
+            }, 60000 * (60 * 6));//every 6 hours
+
+
+
+
+            $scope.baseCurrency = $scope.objMods.modules[2].baseCurrency;
+            $scope.currencyOne = $scope.objMods.modules[2].currencyOne;
+            $scope.currencyTwo = $scope.objMods.modules[2].currencyTwo;
+            let financeBaseCurrency = $scope.baseCurrency;
+
             const financeUrl = 'http://api.fixer.io/';
-            let financeLatest = financeUrl + 'latest?symbols=' + financeUSDCurrency + ',' + financeNZDCurrency + '&base=' + financeBaseCurrency;
+            let financeLatest = financeUrl + 'latest?symbols=' + $scope.currencyOne + ',' + $scope.currencyTwo + '&base=' + $scope.baseCurrency;
             $sce.trustAsResourceUrl(financeLatest);
 
             const getCurrency = function() {
@@ -196,42 +208,79 @@
                 method: 'GET',
                 url: financeLatest
               }).then(function(response) {
-                $scope.currencyNZD = response.data.rates.NZD;
-                $scope.currencyUSD = response.data.rates.USD;
-                $scope.currencyNZDcopy = angular.copy($scope.currencyNZD);
+                console.log('finance',response);
+                $scope.currOneVal = response.data.rates[$scope.currencyOne];
+                $scope.currTwoVal = response.data.rates[$scope.currencyTwo];
 
-                console.log('currency', $scope.currencyNZD);
               }, function(response) {
                 console.log('error', response);
               });
             };
             getCurrency();
-            $interval(function(){
+            const repeatCurrency = $interval(function(){
               console.log('getting latest finance...');
-              $scope.currencyNZDCopy = angular.copy($scope.currencyNZD);
-              console.log('currencyNZD', $scope.currencyNZD);
-              console.log('currencyNZDCopy', $scope.currencyNZDCopy);
+              $scope.currOneValcopy = angular.copy($scope.currOneVal);
+              // console.log('currencyOne', $scope.currOneVal);
+              console.log('currencyOneCopy', $scope.currOneValcopy);
               getCurrency();
-              console.log('then after getCurrency...');
-              console.log('currencyNZD', $scope.currencyNZD);
-              console.log('currencyNZDCopy', $scope.currencyNZDCopy);
-              // if($scope.currencyNZD > $scope.currencyNZDCopy) {
-              //   // fall
-              // }
-              // else if($scope.currencyNZD < $scope.currencyNZDCopy) {
-              //   // rise
-              // } else {
-              //   // same
-              // }
-            }, 60000 * 60);//ever hour
+              console.log('currencyOne', $scope.currOneVal);
+              if($scope.currOneVal > $scope.currOneValcopy) {
+                // fall
+              console.log('$scope.currOneVal > $scope.currOneValcopy');
+                $scope.currencyFall = true;
+              }
+              else if($scope.currOneVal < $scope.currOneValcopy) {
+                console.log('$scope.currOneVal < $scope.currOneValcopy');
+                $scope.currencyRise = true;
+                // rise
+              } else {
+                console.log('$scope.currOneVal = $scope.currOneValcopy');
+                // same
+                $scope.currencySame = true;
+
+              }
+            }, 60000 * 15);//every 15mins
+
+
+            const cb = new Codebird();
+
+        		cb.setConsumerKey('gMsM8AJwDYcxhAC4Trg326lp6', 'xgtnNetwamP1j9I1RWyqO5NNpdHw2wuUErqOaPsI8KKK4950o5');
+        		cb.setToken('8004102-VuDQ6ED8HZZjZMc7ScQikWlgOnCq4HKxcjLw79S4AH', 'pJ2pRW6iQDp7Aa9mVTqF8xx8RJhs5huIlWttTKLfGEdBm');
+
+            $scope.screenName = $scope.objMods.modules[3].user;
+            console.log('screenName', $scope.screenName);
+
+            const twitter = function() {
+              $scope.loadingTweets = true;
+              console.log('twitter...');
+              cb.__call('statuses_userTimeline', {
+                screen_name: $scope.screenName
+              }, function (data) {
+      						$scope.$apply(function () {
+                    $scope.loadingTweets = false;
+      							$scope.tweets = data;
+      							console.log('twtter', data);
+      						});
+      					}
+      				);
+            };
+            twitter();
+
+
+            // destroy intervals on state change
+            $scope.$on('$destroy', function(){
+              console.log('cancelling intervals');
+              $interval.cancel(repeatWeather);
+              $interval.cancel(repeatTFL);
+              $interval.cancel(repeatStrava);
+              $interval.cancel(repeatCurrency);
+            });
 
           }).catch(function(error) {
             console.log(error);
           });
         };
         getUserData();
-
-
       }
     });
 

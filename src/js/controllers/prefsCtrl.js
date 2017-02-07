@@ -85,13 +85,14 @@
                   {
                     name: "finance",
                     active: false,
-                    localCurrency: "GBP",
-                    foreignCurrency: "NZD"
+                    baseCurrency: "GBP",
+                    currencyOne: "NZD",
+                    currencyTwo: "USD"
                   },
                   {
                     name: "twitter",
                     active: false,
-                    user: "BBCBreakingNews"
+                    user: "BBCBreaking"
                   },
                   {
                     name: "strava",

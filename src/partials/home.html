@@ -31,12 +31,25 @@
 
     </li>
     <li class="panel" ng-show="objMods.modules[2].active">
-      <p>&pound;1 {{objMods.modules[2].localCurrency}} is trading at ${{currencyNZD}} NZD <i class="fa fa-caret-down failure"></i></p>
-      <p>&pound;1 {{objMods.modules[2].localCurrency}} is trading at ${{currencyUSD}} USD <i class="fa fa-caret-up success"></i></p>
-
+      <p><span ng-if="baseCurrency === 'GBP'">&pound;</span><span ng-if="baseCurrency === 'EUR'">&euro;</span><span ng-if="baseCurrency === 'BGN'">лв.</span><span ng-if="baseCurrency === 'NZD' || baseCurrency === 'AUD' || baseCurrency === 'USD'">$</span>1 {{baseCurrency}} is trading at
+        <span ng-if="currencyOne === 'GBP'">&pound;</span><span ng-if="currencyOne === 'EUR'">&euro;</span><span ng-if="currencyOne === 'BGN'">лв.</span><span ng-if="currencyOne === 'NZD' || currencyOne === 'AUD' || currencyOne === 'USD'">$</span>{{currOneVal}} {{currencyOne}} <i class="fa fa-caret-down failure"></i> and <span ng-if="currencyTwo === 'GBP'">&pound;</span><span ng-if="currencyTwo === 'EUR'">&euro;</span><span ng-if="currencyTwo === 'BGN'">лв</span><span ng-if="currencyTwo === 'NZD' || currencyTwo === 'AUD' || currencyTwo === 'USD'">$</span>{{currTwoVal}} {{currencyTwo}}
+        <i class="fa fa-caret-up success"></i></p>
+      <div>
+        <p style="border: 1px solid red;" ng-if="currencyFall">currencyFall:</p>
+        <p style="border: 1px solid green;" ng-if="currencyRise">currencyRise:</p>
+        <p style="border: 1px solid orange;" ng-if="currencySame">currencySame:</p>
+        <p style="border: 1px solid white;" ng-if="currOneValcopy">currOneValcopy: {{currOneValcopy}}</p>
+      </div>
     </li>
     <li class="panel" ng-show="objMods.modules[3].active">
-      <p>twitter: {{objMods.modules[3].user}}</p>
+      <p>twitter: {{screenName}}</p>
+      <ul>
+        <li ng-if="loadingTweets">loading</li>
+        <li ng-if="!loadingTweets" style="margin-bottom: 1em;" ng-repeat="tweet in tweets | limitTo: 5">
+          <p>{{tweet.text}}</p>
+          <span>{{tweet.created_at}}</span>
+        </li>
+      </ul>
     </li>
     <li class="panel" ng-show="objMods.modules[4].active">
       <p>Latest Strava results for Mark</p>
