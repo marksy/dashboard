@@ -4,11 +4,6 @@
   const app = angular.module('app');
 
   app.controller('PrefsController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', ($scope, $state, $firebaseAuth, $firebaseObject) => {
-    console.log('prefsCtrl object: ');
-
-    // let rootRef = firebase.database().ref().child('users');
-    // let ref = rootRef.child('116196474336917056939');
-    // let obj = $firebaseObject(ref);
 
     const rando = (arr) => {
       return arr[Math.floor(Math.random() * arr.length)];
@@ -26,6 +21,7 @@
       'wagwan'
     ];
     $scope.greeting = rando(greetings);
+    console.log($scope.greeting + ' majte');
 
     $scope.stations = [
       {
@@ -52,7 +48,6 @@
       if(authData === null) {
         $state.go('login');
       } else {
-        console.log('logged in as ', authData.providerData[0].uid);
         let userId = authData.providerData[0].uid;
         $scope.displayName = authData.providerData[0].displayName;
         $scope.photoURL = authData.providerData[0].photoURL;
@@ -60,10 +55,8 @@
         const getUserData = function() {
           let currentUser = firebase.database().ref().child('/users/' + userId);
           let userExists = $firebaseObject(firebase.database().ref().child('/users/' + userId));
-          console.log('userExists', userExists);
 
           return currentUser.once('value').then(function(s) {
-            console.log('s',s.val());
             if(s.val() !== null) {
               $scope.objMods = s.val();
             } else {
@@ -103,7 +96,6 @@
               };
             }
             $scope.$apply();
-            console.log('objMods', $scope.objMods);
           }).catch(function(error) {
             console.log(error);
           });
@@ -113,14 +105,12 @@
         $scope.updateModel = function() {
           const model = $scope.objMods;
           firebase.database().ref('users/' + userId).set(model);
-          console.log('model', $scope.objMods);
         };
       }
     });
 
 
     $scope.signout = function() {
-      console.log('clicked signout');
       auth.$signOut();
     };
 

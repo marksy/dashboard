@@ -3,10 +3,11 @@
 
   let app = angular.module('app');
 
-  app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+  app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider) {
 
     $urlRouterProvider.otherwise('/');
-    // $locationProvider.html5Mode(true);
+    $compileProvider.debugInfoEnabled(false);
+    $locationProvider.html5Mode(true);
 
     let states = [
       {
