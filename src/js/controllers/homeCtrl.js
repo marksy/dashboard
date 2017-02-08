@@ -45,13 +45,6 @@
             if(s.val() !== null) {
               $scope.objMods = s.val();
 
-              currentLocation = $scope.objMods.modules[0].location;
-              console.log("currentLocation",currentLocation);
-
-              trainLine = $scope.objMods.modules[1].lines;
-              console.log("trainLine",trainLine);
-
-
             } else {
               //create a blank model
               $scope.objMods = {
