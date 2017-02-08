@@ -1,6 +1,7 @@
 .loading {
   p {
-    display: none;
+    transition: opacity $speed;
+    opacity: 0;
   }
   .icon-loading {
     display: block;

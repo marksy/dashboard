@@ -114,14 +114,19 @@
                 });
             };
 
-            // fetchCurrentWeather();
-            fetchForecastWeather();
+            let repeatWeather;
 
-            const repeatWeather = $interval(function(){
-              console.log('getting latest weather...');
+            if($scope.objMods.modules[0].active) {
               // fetchCurrentWeather();
               fetchForecastWeather();
-            }, 900000); //15 mins
+
+              repeatWeather = $interval(function(){
+                console.log('getting latest weather...');
+                // fetchCurrentWeather();
+                fetchForecastWeather();
+              }, 900000); //15 mins
+            }
+
 
 
 
@@ -158,13 +163,18 @@
                 console.log('error', error);
               });
             };
-            getTFLStatus();
 
-            const repeatTFL = $interval(function(){
-              console.log('repeatTFL: getting latest trains...' + new Date());
-              // fetchCurrentWeather();
+            let repeatTFL;
+
+            if($scope.objMods.modules[1].active) {
               getTFLStatus();
-            }, 60000); // every minute
+
+              repeatTFL = $interval(function(){
+                console.log('repeatTFL: getting latest trains...' + new Date());
+                // fetchCurrentWeather();
+                getTFLStatus();
+              }, 60000); // every minute
+            }
 
 
 
@@ -185,11 +195,18 @@
                   console.log('stravaUrl fail',response);
               });
             };
-            getStrava();
 
-            const repeatStrava = $interval(function(){
+            let repeatStrava;
+
+            if($scope.objMods.modules[4].active) {
               getStrava();
-            }, 60000 * (60 * 6));//every 6 hours
+
+              repeatStrava = $interval(function(){
+                getStrava();
+              }, 60000 * (60 * 6));//every 6 hours
+            }
+
+
 
 
 
@@ -216,11 +233,35 @@
                 console.log('error', response);
               });
             };
-            getCurrency();
-            const repeatCurrency = $interval(function(){
-              console.log('getting latest finance...');
+
+            let repeatCurrency;
+
+            if($scope.objMods.modules[2].active) {
               getCurrency();
-            }, 60000 * 15);//every 15mins
+              repeatCurrency = $interval(function(){
+                console.log('getting latest finance...');
+                $scope.currOneValcopy = angular.copy($scope.currOneVal);
+                // console.log('currencyOne', $scope.currOneVal);
+                console.log('currencyOneCopy', $scope.currOneValcopy);
+                getCurrency();
+                console.log('currencyOne', $scope.currOneVal);
+                if($scope.currOneVal > $scope.currOneValcopy) {
+                  // fall
+                console.log('$scope.currOneVal > $scope.currOneValcopy');
+                  $scope.currencyFall = true;
+                }
+                else if($scope.currOneVal < $scope.currOneValcopy) {
+                  console.log('$scope.currOneVal < $scope.currOneValcopy');
+                  $scope.currencyRise = true;
+                  // rise
+                } else {
+                  console.log('$scope.currOneVal = $scope.currOneValcopy');
+                  // same
+                  $scope.currencySame = true;
+
+                }
+              }, 60000 * 15);//every 15mins
+            }
 
 
             const cb = new Codebird();
@@ -245,12 +286,17 @@
       					}
       				);
             };
-            twitter();
 
-            const repeatTweet = $interval(function(){
-              console.log('getting latest twitter...');
+            let repeatTwitter;
+
+            if($scope.objMods.modules[3].active) {
               twitter();
-            }, 60000 * 5);//every 5mins
+              repeatTwitter = $interval(function(){
+                console.log('getting more tweets');
+                twitter();
+              }, 60000 * 5); // 5 mins
+
+            }
 
 
 
