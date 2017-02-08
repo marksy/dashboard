@@ -3,7 +3,7 @@
 
   const app = angular.module('app');
 
-  app.controller('loginCtrl', ['$scope', '$state', '$firebaseAuth', ($scope, $state, $firebaseAuth) => {
+  app.controller('LoginController', ['$scope', '$state', '$firebaseAuth', ($scope, $state, $firebaseAuth) => {
     console.log('login');
     const auth = $firebaseAuth();
 
@@ -30,7 +30,7 @@
         }, 2000);
       });
     };
-    // 
+    //
     // $scope.signout = function() {
     //   console.log('clicked signout');
     //   auth.$signOut();

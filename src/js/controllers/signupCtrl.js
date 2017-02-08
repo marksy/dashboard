@@ -3,8 +3,8 @@
 
   const app = angular.module('app');
 
-  app.controller('signupCtrl', ['$scope', ($scope) => {
-    console.log('signupCtrl');
+  app.controller('SignupController', ['$scope', ($scope) => {
+    console.log('SignupController');
 
   }]);
 })();

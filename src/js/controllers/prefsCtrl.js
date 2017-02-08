@@ -3,7 +3,7 @@
 
   const app = angular.module('app');
 
-  app.controller('prefsCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', ($scope, $state, $firebaseAuth, $firebaseObject) => {
+  app.controller('PrefsController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', ($scope, $state, $firebaseAuth, $firebaseObject) => {
     console.log('prefsCtrl object: ');
 
     // let rootRef = firebase.database().ref().child('users');

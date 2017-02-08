@@ -14,28 +14,28 @@
         url: '/',
         component: 'home',
         templateUrl: 'partials/home.html',
-        controller: 'HomeCtrl'
+        controller: 'HomeController'
       },
       {
         name: 'login',
         url: '/login',
         component: 'login',
         templateUrl: 'partials/login.html',
-        controller: 'loginCtrl'
+        controller: 'LoginController'
       },
       {
         name: 'signup',
         url: '/signup',
         component: 'signup',
         templateUrl: 'partials/signup.html',
-        controller: 'signupCtrl'
+        controller: 'SignupController'
       },
       {
         name: 'prefs',
         url: '/prefs',
         component: 'prefs',
         templateUrl: 'partials/prefs.html',
-        controller: 'prefsCtrl'
+        controller: 'PrefsController'
       }
     ];
 

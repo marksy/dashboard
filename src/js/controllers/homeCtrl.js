@@ -3,7 +3,7 @@
 
   let app = angular.module('app');
 
-  app.controller('HomeCtrl', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce) {
+  app.controller('HomeController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce) {
     console.log('HomeCtrl');
 
     const auth = $firebaseAuth();
@@ -219,26 +219,7 @@
             getCurrency();
             const repeatCurrency = $interval(function(){
               console.log('getting latest finance...');
-              $scope.currOneValcopy = angular.copy($scope.currOneVal);
-              // console.log('currencyOne', $scope.currOneVal);
-              console.log('currencyOneCopy', $scope.currOneValcopy);
               getCurrency();
-              console.log('currencyOne', $scope.currOneVal);
-              if($scope.currOneVal > $scope.currOneValcopy) {
-                // fall
-              console.log('$scope.currOneVal > $scope.currOneValcopy');
-                $scope.currencyFall = true;
-              }
-              else if($scope.currOneVal < $scope.currOneValcopy) {
-                console.log('$scope.currOneVal < $scope.currOneValcopy');
-                $scope.currencyRise = true;
-                // rise
-              } else {
-                console.log('$scope.currOneVal = $scope.currOneValcopy');
-                // same
-                $scope.currencySame = true;
-
-              }
             }, 60000 * 15);//every 15mins
 
 
@@ -266,6 +247,12 @@
             };
             twitter();
 
+            const repeatTweet = $interval(function(){
+              console.log('getting latest twitter...');
+              twitter();
+            }, 60000 * 5);//every 5mins
+
+
 
             // destroy intervals on state change
             $scope.$on('$destroy', function(){
@@ -274,6 +261,7 @@
               $interval.cancel(repeatTFL);
               $interval.cancel(repeatStrava);
               $interval.cancel(repeatCurrency);
+              $interval.cancel(repeatTweet);
             });
 
           }).catch(function(error) {

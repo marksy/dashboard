@@ -13,6 +13,8 @@
   const dateTime = require('./utilities/dateTime.js');
   const cleanStation = require('./utilities/cleanStationName.js');
   const cleanLine = require('./utilities/cleanLineName.js');
+  const twitterLinks = require('./utilities/twitterLinks.js');
+  const twitterDate = require('./utilities/twitterDate.js');
 
   // const Codebird = require('./utilities/codebird.js');
 
