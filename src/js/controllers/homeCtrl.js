@@ -287,11 +287,11 @@
       				);
             };
 
-            let repeatTwitter;
+            let repeatTweet;
 
             if($scope.objMods.modules[3].active) {
               twitter();
-              repeatTwitter = $interval(function(){
+              repeatTweet = $interval(function(){
                 console.log('getting more tweets');
                 twitter();
               }, 60000 * 5); // 5 mins
