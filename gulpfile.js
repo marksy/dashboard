@@ -36,6 +36,7 @@
       html: './src/**/*.html',
       css: './src/css/',
       js: './src/js/**/*.js',
+      vendor: './src/vendor/**/*.js',
       fonts: './src/fonts/**/*.*',
       sass: './src/scss/**/*.scss',
       dist: './dist'
@@ -102,9 +103,14 @@
       .pipe(gulp.dest(config.paths.dist + '/assets/fonts/'));
   });
 
+  gulp.task('vendor', () => {
+    return gulp.src(config.paths.vendor)
+      .pipe(gulp.dest(config.paths.dist + '/assets/scripts/vendor/'));
+  });
+
   gulp.task('html', () => {
     return gulp.src(config.paths.html)
-      .pipe(gulp.dest(config.paths.dist + ''))
+      .pipe(gulp.dest(config.paths.dist))
       .pipe(connect.reload());
   });
 
@@ -122,6 +128,14 @@
     'html',
     'open',
     'watch'
+  ]);
+
+  gulp.task('build', [
+    'js',
+    'fonts',
+    'sass',
+    'vendor',
+    'html'
   ]);
 
 })();
