@@ -97,6 +97,7 @@
               fetchForecastWeather();
 
               repeatWeather = $interval(function(){
+                // fetchCurrentWeather();
                 fetchForecastWeather();
               }, 900000); //15 mins
             }
@@ -142,6 +143,7 @@
               getTFLStatus();
 
               repeatTFL = $interval(function(){
+                // fetchCurrentWeather();
                 getTFLStatus();
               }, 60000); // every minute
             }
@@ -180,9 +182,9 @@
 
 
 
-            $scope.baseCurrency = $scope.objMods.modules[2].baseCurrency;
-            $scope.currencyOne = $scope.objMods.modules[2].currencyOne;
-            $scope.currencyTwo = $scope.objMods.modules[2].currencyTwo;
+            $scope.baseCurrency = $scope.objMods.modules[2].baseCurrency.toUpperCase();
+            $scope.currencyOne = $scope.objMods.modules[2].currencyOne.toUpperCase();
+            $scope.currencyTwo = $scope.objMods.modules[2].currencyTwo.toUpperCase();
             let financeBaseCurrency = $scope.baseCurrency;
 
             const financeUrl = 'http://api.fixer.io/';
@@ -196,6 +198,7 @@
               }).then(function(response) {
                 $scope.currOneVal = response.data.rates[$scope.currencyOne];
                 $scope.currTwoVal = response.data.rates[$scope.currencyTwo];
+
               }, function(response) {
                 console.log('error', response);
               });
@@ -244,11 +247,11 @@
       				);
             };
 
-            let repeatTwitter;
+            let repeatTweet;
 
             if($scope.objMods.modules[3].active) {
               twitter();
-              repeatTwitter = $interval(function(){
+              repeatTweet = $interval(function(){
                 twitter();
               }, 60000 * 5); // 5 mins
 
@@ -262,6 +265,7 @@
               $interval.cancel(repeatTFL);
               $interval.cancel(repeatStrava);
               $interval.cancel(repeatCurrency);
+              $interval.cancel(repeatTweet);
             });
 
           }).catch(function(error) {
