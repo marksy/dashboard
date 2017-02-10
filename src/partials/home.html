@@ -36,12 +36,12 @@
         <i class="fa fa-caret-up success"></i></p>
     </li>
     <li class="panel" ng-show="objMods.modules[3].active">
-      <p>twitter: {{screenName}}</p>
+      <p>{{screenName}}</p>
       <ul>
         <li ng-if="loadingTweets">loading</li>
         <li ng-if="!loadingTweets" ng-repeat="tweet in tweets | limitTo: 5" class="tweet">
           <p>
-            <a href="{{tweet.entities.urls[0].expanded_url}}" target="_blank">
+            <a href="{{tweet.entities.urls[0].expanded_url ? tweet.entities.urls[0].expanded_url : 'http://www.twitter.com/' + tweet.user.name + '/status/' + tweet.id_str}}" target="_blank">
               <twitter-links label="tweet.text"></twitter-links>
             </a><br>
             <twitter-date label="tweet.created_at"></twitter-date>
