@@ -7,7 +7,7 @@
 
     $urlRouterProvider.otherwise('/');
     $compileProvider.debugInfoEnabled(false);
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(false);
 
     let states = [
       {

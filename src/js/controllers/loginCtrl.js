@@ -22,12 +22,12 @@
 
     $scope.signin = function() {
       console.log('clicked sign in ');
-      auth.$signInWithPopup("google").catch(function(error) {
+      auth.$signInWithRedirect("google").catch(function(error) {
         console.log("Authentication failed:", error);
-        console.log('trying again in 2 sec');
-        setTimeout(function() {
-          auth.$signInWithPopup("google");
-        }, 2000);
+        // console.log('trying again in 2 sec');
+        // setTimeout(function() {
+        //   auth.$signInWithRedirect("google");
+        // }, 2000);
       });
     };
     //
