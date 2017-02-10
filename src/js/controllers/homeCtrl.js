@@ -5,19 +5,21 @@
 
   app.controller('HomeController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce) {
 
+    let vm = $scope;
+
     const auth = $firebaseAuth();
     let currentLocation;
     let trainLine;
 
     auth.$onAuthStateChanged(function(authData) {
-      $scope.authData = authData;
+      vm.authData = authData;
 
       if(authData === null) {
         $state.go('login');
       } else {
         let userId = authData.providerData[0].uid;
-        $scope.displayName = authData.providerData[0].displayName;
-        $scope.photoURL = authData.providerData[0].photoURL;
+        vm.displayName = authData.providerData[0].displayName;
+        vm.photoURL = authData.providerData[0].photoURL;
 
         let getUserData = function() {
           let currentUser = firebase.database().ref().child('/users/' + userId);
@@ -25,14 +27,14 @@
 
           return currentUser.once('value').then(function(data) {
             if(data.val() !== null) {
-              $scope.objMods = data.val();
+              vm.objMods = data.val();
 
-              currentLocation = $scope.objMods.modules[0].location;
-              trainLine = $scope.objMods.modules[1].lines;
+              currentLocation = vm.objMods.modules[0].location;
+              trainLine = vm.objMods.modules[1].lines;
 
             } else {
               //create a blank model
-              $scope.objMods = {
+              vm.objMods = {
                 modules: [
                   {
                     name: "weather",
@@ -66,7 +68,7 @@
                 ]
               };
             }
-            $scope.$apply();
+            vm.$apply();
 
             const key = 'a01445a972f04947b49150500172701';
             if(currentLocation === undefined) {
@@ -75,24 +77,24 @@
             let forecastWeatherUrl = 'http://api.apixu.com/v1/forecast.json?key=' + key + '&q=' + currentLocation;
 
             const fetchForecastWeather = function() {
-              $scope.loadingWeatherData = true;
+              vm.loadingWeatherData = true;
               $http({
                 method: 'GET',
                 url: forecastWeatherUrl
               }).then(function(response) {
-                  $scope.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
-                  $scope.weatherData = response.data.current;
-                  $scope.loadingWeatherData = false;
+                  vm.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
+                  vm.weatherData = response.data.current;
+                  vm.loadingWeatherData = false;
 
                 }, function(response) {
                   console.log('error', response);
-                  $scope.loadingWeatherData = false;
+                  vm.loadingWeatherData = false;
                 });
             };
 
             let repeatWeather;
 
-            if($scope.objMods.modules[0].active) {
+            if(vm.objMods.modules[0].active) {
               // fetchCurrentWeather();
               fetchForecastWeather();
 
@@ -121,8 +123,8 @@
                 method: 'GET',
                 url: tflUrl
               }).then(function successCallback(data) {
-                  $scope.trainsArriving = data.data;
-                  $scope.stationName = data.data[0].stationName;
+                  vm.trainsArriving = data.data;
+                  vm.stationName = data.data[0].stationName;
                 }, function errorCallback(error) {
                   console.log('error', error);
                 });
@@ -131,7 +133,7 @@
                 method: 'GET',
                 url: tube
               }).then(function successCallback(data) {
-                $scope.tube = data.data;
+                vm.tube = data.data;
               }, function errorCallback(error) {
                 console.log('error', error);
               });
@@ -139,7 +141,7 @@
 
             let repeatTFL;
 
-            if($scope.objMods.modules[1].active) {
+            if(vm.objMods.modules[1].active) {
               getTFLStatus();
 
               repeatTFL = $interval(function(){
@@ -161,7 +163,7 @@
                 method: 'GET',
                 url: stravaUrl
               }).then(function(response) {
-                  $scope.stravaData = response.data;
+                  vm.stravaData = response.data;
                 }, function(response) {
                   console.log('stravaUrl fail',response);
               });
@@ -169,7 +171,7 @@
 
             let repeatStrava;
 
-            if($scope.objMods.modules[4].active) {
+            if(vm.objMods.modules[4].active) {
               getStrava();
 
               repeatStrava = $interval(function(){
@@ -182,13 +184,13 @@
 
 
 
-            $scope.baseCurrency = $scope.objMods.modules[2].baseCurrency.toUpperCase();
-            $scope.currencyOne = $scope.objMods.modules[2].currencyOne.toUpperCase();
-            $scope.currencyTwo = $scope.objMods.modules[2].currencyTwo.toUpperCase();
-            let financeBaseCurrency = $scope.baseCurrency;
+            vm.baseCurrency = vm.objMods.modules[2].baseCurrency.toUpperCase();
+            vm.currencyOne = vm.objMods.modules[2].currencyOne.toUpperCase();
+            vm.currencyTwo = vm.objMods.modules[2].currencyTwo.toUpperCase();
+            let financeBaseCurrency = vm.baseCurrency;
 
             const financeUrl = 'http://api.fixer.io/';
-            let financeLatest = financeUrl + 'latest?symbols=' + $scope.currencyOne + ',' + $scope.currencyTwo + '&base=' + $scope.baseCurrency;
+            let financeLatest = financeUrl + 'latest?symbols=' + vm.currencyOne + ',' + vm.currencyTwo + '&base=' + vm.baseCurrency;
             $sce.trustAsResourceUrl(financeLatest);
 
             const getCurrency = function() {
@@ -196,8 +198,8 @@
                 method: 'GET',
                 url: financeLatest
               }).then(function(response) {
-                $scope.currOneVal = response.data.rates[$scope.currencyOne];
-                $scope.currTwoVal = response.data.rates[$scope.currencyTwo];
+                vm.currOneVal = response.data.rates[vm.currencyOne];
+                vm.currTwoVal = response.data.rates[vm.currencyTwo];
 
               }, function(response) {
                 console.log('error', response);
@@ -206,25 +208,28 @@
 
             let repeatCurrency;
 
-            if($scope.objMods.modules[2].active) {
+            if(vm.objMods.modules[2].active) {
               getCurrency();
               repeatCurrency = $interval(function(){
-                $scope.currOneValcopy = angular.copy($scope.currOneVal);
+                vm.currOneValcopy = vm.currOneVal;
                 getCurrency();
-                if($scope.currOneVal > $scope.currOneValcopy) {
-                  // fall
-                  $scope.currencyFall = true;
-                }
-                else if($scope.currOneVal < $scope.currOneValcopy) {
-                  $scope.currencyRise = true;
-                  // rise
-                } else {
-                  // same
-                  $scope.currencySame = true;
-
-                }
-              }, 60000 * 15);//every 15mins
+                console.log(vm.currOneValcopy,vm.currOneVal);
+              }, 60000 * 15);
+              vm.currencyFall = false;
+              vm.currencyRise = false;
+              vm.currencySame = false;
+              if(vm.currOneValcopy > vm.currOneVal) {
+                vm.currencyFall = true;
+              }
+              if(vm.currOneValcopy < vm.currOneVal) {
+                vm.currencyRise = true;
+              }
+              if(vm.currOneValcopy === vm.currOneVal) {
+                vm.currencySame = true;
+              }
             }
+
+
 
 
             const cb = new Codebird();
@@ -232,16 +237,16 @@
         		cb.setConsumerKey('gMsM8AJwDYcxhAC4Trg326lp6', 'xgtnNetwamP1j9I1RWyqO5NNpdHw2wuUErqOaPsI8KKK4950o5');
         		cb.setToken('8004102-VuDQ6ED8HZZjZMc7ScQikWlgOnCq4HKxcjLw79S4AH', 'pJ2pRW6iQDp7Aa9mVTqF8xx8RJhs5huIlWttTKLfGEdBm');
 
-            $scope.screenName = $scope.objMods.modules[3].user;
+            vm.screenName = vm.objMods.modules[3].user;
 
             const twitter = function() {
-              $scope.loadingTweets = true;
+              vm.loadingTweets = true;
               cb.__call('statuses_userTimeline', {
-                screen_name: $scope.screenName
+                screen_name: vm.screenName
               }, function (data) {
-      						$scope.$apply(function () {
-                    $scope.loadingTweets = false;
-      							$scope.tweets = data;
+      						vm.$apply(function () {
+                    vm.loadingTweets = false;
+      							vm.tweets = data;
       						});
       					}
       				);
@@ -249,7 +254,7 @@
 
             let repeatTweet;
 
-            if($scope.objMods.modules[3].active) {
+            if(vm.objMods.modules[3].active) {
               twitter();
               repeatTweet = $interval(function(){
                 twitter();
@@ -260,7 +265,7 @@
 
 
             // destroy intervals on state change
-            $scope.$on('$destroy', function(){
+            vm.$on('$destroy', function(){
               $interval.cancel(repeatWeather);
               $interval.cancel(repeatTFL);
               $interval.cancel(repeatStrava);

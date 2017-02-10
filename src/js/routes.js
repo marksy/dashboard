@@ -15,28 +15,32 @@
         url: '/',
         component: 'home',
         templateUrl: 'partials/home.html',
-        controller: 'HomeController'
+        controller: 'HomeController',
+        controllerAs: 'homeCtrl'
       },
       {
         name: 'login',
         url: '/login',
         component: 'login',
         templateUrl: 'partials/login.html',
-        controller: 'LoginController'
+        controller: 'LoginController',
+        controllerAs: 'loginCtrl'
       },
       {
         name: 'signup',
         url: '/signup',
         component: 'signup',
         templateUrl: 'partials/signup.html',
-        controller: 'SignupController'
+        controller: 'SignupController',
+        controllerAs: 'signupCtrl'
       },
       {
         name: 'prefs',
         url: '/prefs',
         component: 'prefs',
         templateUrl: 'partials/prefs.html',
-        controller: 'PrefsController'
+        controller: 'PrefsController',
+        controllerAs: 'prefsCtrl'
       }
     ];
 
