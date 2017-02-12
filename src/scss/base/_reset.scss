@@ -39,3 +39,12 @@ hr {
   display: none;
   border: none;
 }
+canvas {
+  background: transparent;
+
+  &#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

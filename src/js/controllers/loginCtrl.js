@@ -24,17 +24,8 @@
       console.log('clicked sign in ');
       auth.$signInWithRedirect("google").catch(function(error) {
         console.log("Authentication failed:", error);
-        // console.log('trying again in 2 sec');
-        // setTimeout(function() {
-        //   auth.$signInWithRedirect("google");
-        // }, 2000);
       });
     };
-    //
-    // $scope.signout = function() {
-    //   console.log('clicked signout');
-    //   auth.$signOut();
-    // };
 
   }]);
 })();

@@ -3,7 +3,7 @@
 
   let app = angular.module('app');
 
-  app.controller('HomeController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce) {
+  app.controller('HomeController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', '$timeout', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce, $timeout) {
 
     let vm = $scope;
 
@@ -70,6 +70,10 @@
             }
             vm.$apply();
 
+
+
+
+
             const key = 'a01445a972f04947b49150500172701';
             if(currentLocation === undefined) {
               currentLocation = 'London';
@@ -95,15 +99,12 @@
             let repeatWeather;
 
             if(vm.objMods.modules[0].active) {
-              // fetchCurrentWeather();
               fetchForecastWeather();
 
               repeatWeather = $interval(function(){
-                // fetchCurrentWeather();
                 fetchForecastWeather();
               }, 900000); //15 mins
             }
-
 
 
 
@@ -117,14 +118,20 @@
             let tflUrl = 'https://api.tfl.gov.uk/' + tflMode + '/' + tflStopPoint + '/arrivals' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
             let tube = 'https://api.tfl.gov.uk/line/mode/tube/status' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
 
+            console.log('tflUrl',tflUrl);
+
             const getTFLStatus = function() {
               // get trains
               $http({
                 method: 'GET',
                 url: tflUrl
               }).then(function successCallback(data) {
-                  vm.trainsArriving = data.data;
-                  vm.stationName = data.data[0].stationName;
+                  if(data.data.length !== 0) {
+                    vm.trainsArriving = data.data;
+                    vm.stationName = data.data[0].stationName;
+                  } else {
+                    vm.dataNull = 'STUPID TFL DATA ERROR. ';
+                  }
                 }, function errorCallback(error) {
                   console.log('error', error);
                 });
@@ -153,7 +160,6 @@
 
 
 
-
             let stravaAT = '54b0e167486e9e58b52d9b1a73b5471e24c5cf58';
             let stravaUrl = 'https://www.strava.com/api/v3/athlete/activities?access_token=' + stravaAT;
             $sce.trustAsResourceUrl(stravaUrl);
@@ -178,7 +184,6 @@
                 getStrava();
               }, 60000 * (60 * 6));//every 6 hours
             }
-
 
 
 
@@ -263,7 +268,6 @@
             }
 
 
-
             // destroy intervals on state change
             vm.$on('$destroy', function(){
               $interval.cancel(repeatWeather);
@@ -278,6 +282,7 @@
           });
         };
         getUserData();
+
       }
     });
 

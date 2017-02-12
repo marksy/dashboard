@@ -20,7 +20,8 @@
         </li>
       </ul>
       <div ng-show="objMods.modules[1].lines[0].origin !== ''">
-        <p>Next trains from {{stationName}}</p>
+        <p ng-if="!dataNull">Next trains from {{stationName}}</p>
+        <blockquote class="blockquote" ng-if="dataNull">TFL is having trouble sending <em>train station</em> data currently 🙄</blockquote>
       <ul>
         <!-- track by $index doing weird things to the ng-if -->
         <li ng-repeat="train in trainsArriving | orderBy: 'timeToStation' track by $index" ng-if="train.direction === 'inbound'">
@@ -34,9 +35,9 @@
       <p><span ng-if="baseCurrency === 'GBP'">&pound;</span><span ng-if="baseCurrency === 'EUR'">&euro;</span><span ng-if="baseCurrency === 'BGN'">лв.</span><span ng-if="baseCurrency === 'NZD' || baseCurrency === 'AUD' || baseCurrency === 'USD'">$</span>1 {{baseCurrency}} is trading at
         <span ng-if="currencyOne === 'GBP'">&pound;</span><span ng-if="currencyOne === 'EUR'">&euro;</span><span ng-if="currencyOne === 'BGN'">лв.</span><span ng-if="currencyOne === 'NZD' || currencyOne === 'AUD' || currencyOne === 'USD'">$</span>{{currOneVal}} {{currencyOne}} <i class="fa fa-caret-down failure"></i> and <span ng-if="currencyTwo === 'GBP'">&pound;</span><span ng-if="currencyTwo === 'EUR'">&euro;</span><span ng-if="currencyTwo === 'BGN'">лв</span><span ng-if="currencyTwo === 'NZD' || currencyTwo === 'AUD' || currencyTwo === 'USD'">$</span>{{currTwoVal}} {{currencyTwo}}
         <i class="fa fa-caret-up success"></i></p>
-        <p ng-if="currencyRise">currencyRise {{currencyRise}}</p>
+        <!-- <p ng-if="currencyRise">currencyRise {{currencyRise}}</p>
         <p ng-if="currencyFall">currencyFall {{currencyFall}}</p>
-        <p ng-if="currencySame">currencySame {{currencySame}}</p>
+        <p ng-if="currencySame">currencySame {{currencySame}}</p> -->
     </li>
     <li class="panel" ng-show="objMods.modules[3].active">
       <p>{{screenName}}</p>

@@ -16,10 +16,6 @@
   const twitterLinks = require('./utilities/twitterLinks.js');
   const twitterDate = require('./utilities/twitterDate.js');
 
-  // const Codebird = require('./utilities/codebird.js');
-
-  // const weatherSvc = require('./services/weatherSvc.js');
-
   const MyCtrl = require('./controllers/myCtrl.js');
   const HomeCtrl = require('./controllers/homeCtrl.js');
   const LoginCtrl = require('./controllers/loginCtrl.js');

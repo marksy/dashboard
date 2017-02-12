@@ -1,0 +1,11 @@
+.blockquote {
+  padding: 2em;
+  font-size: 14px;
+  border-left: 5px solid $grey;
+  background-color: lighten($obsidian, 10);
+  display: inline-block;
+  color: $red;
+  em {
+    color: $yellow;
+  }
+}
