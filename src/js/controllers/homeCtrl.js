@@ -26,48 +26,11 @@
           let userExists = $firebaseObject(firebase.database().ref().child('/users/' + userId));
 
           return currentUser.once('value').then(function(data) {
-            if(data.val() !== null) {
-              vm.objMods = data.val();
+            vm.objMods = data.val();
 
-              currentLocation = vm.objMods.modules[0].location;
-              trainLine = vm.objMods.modules[1].lines;
+            currentLocation = vm.objMods.modules[0].location;
+            trainLine = vm.objMods.modules[1].lines;
 
-            } else {
-              //create a blank model
-              vm.objMods = {
-                modules: [
-                  {
-                    name: "weather",
-                    active: false,
-                    location: "London, uk",
-                    unit: "c"
-                  },
-                  {
-                    name: "tfl",
-                    active: false,
-                    tubeFaults: true,
-                    lines: "910GFORESTH"
-                  },
-                  {
-                    name: "finance",
-                    active: false,
-                    baseCurrency: "GBP",
-                    currencyOne: "NZD",
-                    currencyTwo: "USD"
-                  },
-                  {
-                    name: "twitter",
-                    active: false,
-                    user: "BBCBreaking"
-                  },
-                  {
-                    name: "strava",
-                    active: false,
-                    key: "54b0e167486e9e58b52d9b1a73b5471e24c5cf58"
-                  }
-                ]
-              };
-            }
             vm.$apply();
 
 
@@ -118,8 +81,6 @@
             let tflUrl = 'https://api.tfl.gov.uk/' + tflMode + '/' + tflStopPoint + '/arrivals' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
             let tube = 'https://api.tfl.gov.uk/line/mode/tube/status' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
 
-            console.log('tflUrl',tflUrl);
-
             function getTFLStatus() {
               // get trains
               $http({
@@ -130,7 +91,7 @@
                     vm.trainsArriving = data.data;
                     vm.stationName = data.data[0].stationName;
                   } else {
-                    vm.dataNull = 'STUPID TFL DATA ERROR. ';
+                    vm.dataNull = true;
                   }
                 }, function errorCallback(error) {
                   console.log('error', error);
@@ -219,7 +180,7 @@
                 vm.currOneValcopy = vm.currOneVal;
                 getCurrency();
                 console.log(vm.currOneValcopy,vm.currOneVal);
-              }, 60000 * 15);
+              }, 60000 * 60 * 12); //every six hours 
               vm.currencyFall = false;
               vm.currencyRise = false;
               vm.currencySame = false;

@@ -35,7 +35,9 @@
       prefsUpdated: "Preferences updated.",
       prefsFailed: "Failed updating preferences.",
       networkLost: "Network has lost connection.",
-      networkRestored: "Network has restored."
+      networkRestored: "Network has restored.",
+      creationSuccess: "New user created successfully.",
+      creationFailed: "New user created successfully."
     };
 
     vm.stations = [
@@ -80,8 +82,8 @@
                 modules: [
                   {
                     name: "weather",
-                    active: false,
-                    location: "London, uk",
+                    active: true,
+                    location: "London, United Kingdom",
                     unit: "c"
                   },
                   {
@@ -109,6 +111,7 @@
                   }
                 ]
               };
+              firebase.database().ref('users/' + userId).set(vm.objMods, onCreate);
             }
             vm.$apply();
           }).catch(function(error) {
@@ -117,9 +120,25 @@
         };
         getUserData();
 
+        let onCreate = function(error) {
+          if (error) {
+            console.log('Creation failed', error);
+            vm.showAlert = true;
+            vm.alert.message = vm.alert.creationFailed;
+          } else {
+            console.log('Creation succeeded');
+            vm.showAlert = true;
+            vm.alert.message = vm.alert.creationSuccess;
+            vm.$apply();
+            $timeout(function() {
+              vm.showAlert = false;
+            }, 3000);
+          }
+        };
+
         let onComplete = function(error) {
           if (error) {
-            console.log('Synchronization failed');
+            console.log('Synchronization failed', error);
             vm.showAlert = true;
             vm.alert.message = vm.alert.prefsFailed;
           } else {
@@ -128,9 +147,8 @@
             vm.alert.message = vm.alert.prefsUpdated;
             vm.$apply();
             $timeout(function() {
-              console.log('setimeout');
               vm.showAlert = false;
-            }, 5000);
+            }, 3000);
           }
         };
 
