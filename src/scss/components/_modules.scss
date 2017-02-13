@@ -1,8 +1,17 @@
 .module {
   border-bottom: 1px solid transparentize($grey, .8);
   margin-bottom: 2em;
+
+  &:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+
   > div {
     padding: 2em;
+    > ul > li {
+      margin-bottom: 1em;
+    }
   }
 
   > input[type="checkbox"] ~ div {
@@ -10,6 +19,45 @@
   }
   > input[type="checkbox"]:checked ~ div {
     opacity: 1;
+  }
+
+  label[for*="module"] {
+    font-size: 14px;
+    text-decoration: line-through;
+  }
+
+  > input[type="checkbox"]:checked ~ label[for*="module"] {
+    text-decoration: none;
+  }
+
+  label[for*="sub-item"] {
+    font-size: 14px;
+    display: inline-block;
+  }
+
+  label[for*="sub-item"],
+  select {
+    min-width: 120px;
+  }
+
+  input[type="text"] {
+    color: $white;
+    background-color: $obsidian;
+    border: 1px solid $black;
+    padding: 2px 5px;
+  }
+
+  .sub-item-unit {
+    overflow: hidden;
+    > label {
+      float: left;
+    }
+    .temperature-units {
+      float: left;
+      > li {
+        float: left;
+      }
+    }
   }
 
 }

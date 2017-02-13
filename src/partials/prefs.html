@@ -1,9 +1,9 @@
 <article class="panel">
-  <h3><span ng-show="authData">{{greeting}} {{displayName}}</span></h3>
+  <h3 class="title-greeting"><span ng-show="authData">{{greeting}} {{displayName}}</span></h3>
 
-  <button type="button" name="signout" ng-click="signout()">signout</button>
+  <button type="button" class="btn btn-signout" name="signout" ng-click="signout()">Sign out <i class="fa fa-sign-out" aria-hidden="true"></i></button>
+
   <hr>
-  <h3>Active modules:</h3>
   <ul class="modules">
   <!-- weather -->
     <li class="module">
@@ -13,12 +13,12 @@
       <div>
         <ul>
           <li>
-            <label for="sub-item-location">location</label>
+            <label for="sub-item-location">Location:</label>
             <input type="text" name="sub-item-location" ng-change="updateModel()" ng-model="objMods.modules[0].location" id="sub-item-location" value="objMods.modules[0].location" ng-disabled="!objMods.modules[0].active">
           </li>
-          <li>
-            <label for="">Unit:</label>
-            <ul>
+          <li class="sub-item-unit">
+            <label for="sub-item-unit">Unit:</label>
+            <ul class="temperature-units">
               <li>
                 <label for="sub-item-unit-celcius">
                   <input type="radio" name="sub-item-unit" id="sub-item-unit-celcius"  ng-change="updateModel()" ng-model="objMods.modules[0].unit" ng-disabled="!objMods.modules[0].active" ng-checked="objMods.modules[0].unit === 'c'" value="c">
@@ -40,21 +40,22 @@
     <li class="module">
       <input type="checkbox"
        ng-change="updateModel()" ng-checked="objMods.modules[1].active" ng-model="objMods.modules[1].active" name="tfl" id="module-tfl">
-      <label for="module-tfl">tfl</label>
+      <label for="module-tfl">TFL</label>
       <div>
         <ul>
           <li>
-            <input type="checkbox" name="tfl-show-faults" id="tfl-show-faults" value="" ng-change="updateModel()" ng-checked="objMods.modules[1].tubeFaults" ng-model="objMods.modules[1].tubeFaults" ng-disabled="!objMods.modules[1].active">
-            <label for="tfl-show-faults">show tube faults</label>
+            <label for="sub-item-tfl-show-faults">Show tube faults</label>
+            <input type="checkbox" name="sub-item-tfl-show-faults" id="sub-item-tfl-show-faults" value="" ng-change="updateModel()" ng-checked="objMods.modules[1].tubeFaults" ng-model="objMods.modules[1].tubeFaults" ng-disabled="!objMods.modules[1].active">
           </li>
           <li>
-            <label for="tfl-line-origin">origin</label>
+            <label for="sub-item-tfl-station">Station: </label>
             <!--<select ng-model="objMods.modules[1].lines" ng-change="updateModel()">
               <option ng-repeat="station in stations" ng-value="station.code">{{station.name}}</option> -->
             <select
+              id="sub-item-tfl-station"
               ng-model="objMods.modules[1].lines"
               ng-options="station.code as station.name for station in stations"
-              ng-name="tfl-line-origin"
+              ng-name="sub-item-tfl-station"
               ng-change="updateModel()"
               ng-disabled="!objMods.modules[1].active">
             </select>
@@ -72,15 +73,15 @@
       <div>
         <ul>
           <li>
-            <label for="sub-item-base-currency">Base Currency</label>
+            <label for="sub-item-base-currency">Base Currency:</label>
             <input type="text" name="sub-item-base-currency" ng-change="updateModel()" ng-model="objMods.modules[2].baseCurrency" id="sub-item-base-currency" value="objMods.modules[2].localbaseCurrency" ng-disabled="!objMods.modules[2].active">
           </li>
           <li>
-            <label for="sub-item-currency-one">Currency 1</label>
+            <label for="sub-item-currency-one">Currency 1:</label>
             <input type="text" name="sub-item-currency-one" ng-change="updateModel()" ng-model="objMods.modules[2].currencyOne" id="sub-item-currency-one" value="objMods.modules[2].currencyOne" ng-disabled="!objMods.modules[2].active">
           </li>
           <li>
-            <label for="sub-item-currency-two">Currency 2</label>
+            <label for="sub-item-currency-two">Currency 2:</label>
             <input type="text" name="sub-item-currency-two" ng-change="updateModel()" ng-model="objMods.modules[2].currencyTwo" id="sub-item-currency-two" value="objMods.modules[2].currencyTwo" ng-disabled="!objMods.modules[2].active">
           </li>
         </ul>
@@ -94,7 +95,7 @@
       <div>
         <ul>
           <li>
-            <label for="twitter-handle">twitter user</label>
+            <label for="sub-item-twitter-handle">Username:</label>
             <input type="text" name="sub-item-twitter-user" ng-change="updateModel()" ng-model="objMods.modules[3].user" id="sub-item-twitter-user" value="objMods.modules[2].user" ng-disabled="!objMods.modules[3].active">
           </li>
         </ul>
@@ -104,11 +105,11 @@
     <li class="module">
       <input type="checkbox"
        ng-change="updateModel()" ng-checked="objMods.modules[4].active" ng-model="objMods.modules[4].active" name="weather" id="module-strava">
-      <label for="module-strava">strava</label>
+      <label for="module-strava">Strava</label>
       <div>
         <ul>
           <li>
-            <label for="strava-key">key</label>
+            <label for="sub-item-strava-key">User key:</label>
             <input type="text" name="sub-item-strava-key" ng-change="updateModel()" ng-model="objMods.modules[4].key" id="sub-item-strava-key" value="objMods.modules[4].key" ng-disabled="!objMods.modules[4].active">
           </li>
 
@@ -117,4 +118,7 @@
       </div>
     </li>
   </ul>
+  <div class="alert" ng-class="{showAlert: showAlert}">
+    <p>{{alert.message}}</p>
+  </div>
 </article>

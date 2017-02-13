@@ -33,6 +33,17 @@
 
     msg = "Beer o'clock " + moment(date).fromNow();
 
+    if(msg === "Beer o'clock in 4 days") {
+      msg = "Beer o'clock in 4 days. Happy Monday etc. 😐";
+    }
+
+    if(msg === "Beer o'clock in 2 days") {
+      msg = "Beer o'clock in 2 days. Hump day innit. 😉";
+    }
+
+    if(msg === "Beer o'clock in 1 day") {
+      msg = "Beer o'clock in 1 day. Come on! 😀";
+    }
 
     if(msg === "Beer o'clock in 3 hours") {
       msg = "Beer o'clock in <span class='flash'>3 hours!</span>";

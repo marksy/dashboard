@@ -80,7 +80,7 @@
             }
             let forecastWeatherUrl = 'http://api.apixu.com/v1/forecast.json?key=' + key + '&q=' + currentLocation;
 
-            const fetchForecastWeather = function() {
+            function fetchForecastWeather() {
               vm.loadingWeatherData = true;
               $http({
                 method: 'GET',
@@ -94,7 +94,7 @@
                   console.log('error', response);
                   vm.loadingWeatherData = false;
                 });
-            };
+            }
 
             let repeatWeather;
 
@@ -120,7 +120,7 @@
 
             console.log('tflUrl',tflUrl);
 
-            const getTFLStatus = function() {
+            function getTFLStatus() {
               // get trains
               $http({
                 method: 'GET',
@@ -144,7 +144,7 @@
               }, function errorCallback(error) {
                 console.log('error', error);
               });
-            };
+            }
 
             let repeatTFL;
 
@@ -164,7 +164,7 @@
             let stravaUrl = 'https://www.strava.com/api/v3/athlete/activities?access_token=' + stravaAT;
             $sce.trustAsResourceUrl(stravaUrl);
 
-            const getStrava = function() {
+            function getStrava() {
               $http({
                 method: 'GET',
                 url: stravaUrl
@@ -173,7 +173,7 @@
                 }, function(response) {
                   console.log('stravaUrl fail',response);
               });
-            };
+            }
 
             let repeatStrava;
 
@@ -198,7 +198,7 @@
             let financeLatest = financeUrl + 'latest?symbols=' + vm.currencyOne + ',' + vm.currencyTwo + '&base=' + vm.baseCurrency;
             $sce.trustAsResourceUrl(financeLatest);
 
-            const getCurrency = function() {
+            function getCurrency() {
               $http({
                 method: 'GET',
                 url: financeLatest
@@ -209,7 +209,7 @@
               }, function(response) {
                 console.log('error', response);
               });
-            };
+            }
 
             let repeatCurrency;
 
@@ -244,7 +244,7 @@
 
             vm.screenName = vm.objMods.modules[3].user;
 
-            const twitter = function() {
+            function twitter() {
               vm.loadingTweets = true;
               cb.__call('statuses_userTimeline', {
                 screen_name: vm.screenName
@@ -255,7 +255,7 @@
       						});
       					}
       				);
-            };
+            }
 
             let repeatTweet;
 

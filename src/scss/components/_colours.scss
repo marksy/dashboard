@@ -13,3 +13,21 @@
 .royal {
   color: $purple;
 }
+
+.bg {
+  &-success {
+    background-color: $green;
+  }
+  &-failure {
+    background-color: $red;
+  }
+  &-warning {
+    background-color: $orange;
+  }
+  &-info {
+    background-color: $blue;
+  }
+  &-royal {
+    background-color: $purple;
+  }
+}
