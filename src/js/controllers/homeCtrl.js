@@ -14,6 +14,13 @@
     auth.$onAuthStateChanged(function(authData) {
       vm.authData = authData;
 
+      let repeatWeather;
+      let repeatTFL;
+      let repeatStrava;
+      let repeatCurrency;
+      let repeatTweet;
+
+
       if(authData === null) {
         $state.go('login');
       } else {
@@ -59,8 +66,7 @@
                 });
             }
 
-            let repeatWeather;
-
+            // if weather is active
             if(vm.objMods.modules[0].active) {
               fetchForecastWeather();
 
@@ -107,8 +113,7 @@
               });
             }
 
-            let repeatTFL;
-
+            // if TFL is active
             if(vm.objMods.modules[1].active) {
               getTFLStatus();
 
@@ -136,8 +141,7 @@
               });
             }
 
-            let repeatStrava;
-
+            // if strava is active
             if(vm.objMods.modules[4].active) {
               getStrava();
 
@@ -172,15 +176,14 @@
               });
             }
 
-            let repeatCurrency;
-
+            // if currency is active
             if(vm.objMods.modules[2].active) {
               getCurrency();
               repeatCurrency = $interval(function(){
                 vm.currOneValcopy = vm.currOneVal;
                 getCurrency();
                 console.log(vm.currOneValcopy,vm.currOneVal);
-              }, 60000 * 60 * 12); //every six hours 
+              }, 60000 * 60 * 12); //every six hours
               vm.currencyFall = false;
               vm.currencyRise = false;
               vm.currencySame = false;
@@ -194,6 +197,7 @@
                 vm.currencySame = true;
               }
             }
+
 
 
 
@@ -218,8 +222,8 @@
       				);
             }
 
-            let repeatTweet;
 
+            // if twitter is active
             if(vm.objMods.modules[3].active) {
               twitter();
               repeatTweet = $interval(function(){
@@ -228,16 +232,6 @@
 
             }
 
-
-            // destroy intervals on state change
-            vm.$on('$destroy', function(){
-              $interval.cancel(repeatWeather);
-              $interval.cancel(repeatTFL);
-              $interval.cancel(repeatStrava);
-              $interval.cancel(repeatCurrency);
-              $interval.cancel(repeatTweet);
-            });
-
           }).catch(function(error) {
             console.log(error);
           });
@@ -245,6 +239,16 @@
         getUserData();
 
       }
+
+      // destroy intervals on state change
+      $scope.$on('$destroy', function(){
+        $interval.cancel(repeatWeather);
+        $interval.cancel(repeatTFL);
+        $interval.cancel(repeatStrava);
+        $interval.cancel(repeatCurrency);
+        $interval.cancel(repeatTweet);
+      });
+
     });
 
   }]);

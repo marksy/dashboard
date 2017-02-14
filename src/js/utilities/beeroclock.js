@@ -6,16 +6,17 @@
 
 (function() {
   'use strict';
-  var moment = require('moment');
-  var runTimestamp = Math.round(Date.now());
-  var intervalCount = 60000; //every minute
+  const moment = require('moment');
+  const runTimestamp = Math.round(Date.now());
+  const beer = document.getElementById("beer");
+  let intervalCount = 60000 * 60; //every hour
 
   function beerOclock(beerDay) {
 
-    var dayOfWeek = beerDay || 5;//friday
-    var date = new Date(runTimestamp);
-    var msg;
-    var diff = date.getDay() - dayOfWeek;
+    const dayOfWeek = beerDay || 5;//friday
+    const date = new Date(runTimestamp);
+    let msg;
+    const diff = date.getDay() - dayOfWeek;
     if (diff > 0) {
         date.setDate(date.getDate() + 6);
     }
@@ -28,13 +29,17 @@
 
     //on the day speed up the intervalCount
     if(diff === 0) {
-      intervalCount = 1000;
+      intervalCount = 60000;
     }
 
     msg = "Beer o'clock " + moment(date).fromNow();
 
     if(msg === "Beer o'clock in 4 days") {
       msg = "Beer o'clock in 4 days. Happy Monday etc. 😐";
+    }
+
+    if(msg === "Beer o'clock in 3 days") {
+      msg = "Beer o'clock in 3 days. Tuesday";
     }
 
     if(msg === "Beer o'clock in 2 days") {
@@ -54,16 +59,14 @@
     if(msg === "Beer o'clock in 1 hour") {
       msg = "Beer o'clock in <span class='flash'>1 hour!!! 🍺🍻</span>";
     }
-    if(msg === "Beer o'clock in 3 minutes 🍺🍺🍺🍺" ||
-    msg === "Beer o'clock in 2 minutes 🍺🍺🍺🍺🍺🍺" ||
-    msg === "Beer o'clock in 1 minute 🍺🍺🍺🍺🍺🍺🍺🍺" ) {
+    if(msg === "Beer o'clock in 3 minutes" ||
+    msg === "Beer o'clock in 2 minutes" ||
+    msg === "Beer o'clock in 1 minute" ) {
       msg = "HOLY SHIT. Beer o'clock <span class='flash'>in a few minutes!!!!!!1🍻🍻</span>🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺";
     }
 
     setTimeout(function() {
-      var beer = document.getElementById("beer");
       beer.innerHTML = msg;
-      // console.log(beer);
     }, 100);
 
   }
