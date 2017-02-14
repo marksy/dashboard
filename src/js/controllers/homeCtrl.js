@@ -193,17 +193,20 @@
                 //if old value is greater than new value, fall
                 if(vm.currOneValcopy > vm.currOneVal) {
                   vm.currencyFall = true;
+                  console.log('vm.currencyFall = true;');
                 }
                 // if old value is less than new value, rise
                 if(vm.currOneValcopy < vm.currOneVal) {
                   vm.currencyRise = true;
+                  console.log('vm.currencyRise = true;');
                 }
                 // values are equal
                 if(vm.currOneValcopy === vm.currOneVal) {
                   vm.currencySame = true;
+                  console.log('vm.currencySame = true;');
                 }
 
-              }, 60000 * 60 * 12); //every six hours
+              }, 60000 * 60 ); //every hour
             }
 
 
