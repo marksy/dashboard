@@ -170,7 +170,7 @@
               }).then(function(response) {
                 vm.currOneVal = response.data.rates[vm.currencyOne];
                 vm.currTwoVal = response.data.rates[vm.currencyTwo];
-
+                console.log('getCurrency vm.currOneVal: ',vm.currOneVal);
               }, function(response) {
                 console.log('error', response);
               });
@@ -188,7 +188,8 @@
                 vm.currOneValcopy = vm.currOneVal;
                 // update new values
                 getCurrency();
-                console.log(vm.currOneValcopy,vm.currOneVal);
+                console.log("repeatCurrency vm.currOneVal",vm.currOneVal);
+                console.log("repeatCurrency vm.currOneValcopy", vm.currOneValcopy);
 
                 //if old value is greater than new value, fall
                 if(vm.currOneValcopy > vm.currOneVal) {
@@ -206,7 +207,7 @@
                   console.log('vm.currencySame = true;');
                 }
 
-              }, 60000 * 60 ); //every hour
+              }, 60000 * 30 ); //every hour
             }
 
 
