@@ -39,7 +39,7 @@
     }
 
     if(msg === "Beer o'clock in 3 days") {
-      msg = "Beer o'clock in 3 days. Tuesday";
+      msg = "Beer o'clock in 3 days. Tuesday ain't too shabby";
     }
 
     if(msg === "Beer o'clock in 2 days") {
