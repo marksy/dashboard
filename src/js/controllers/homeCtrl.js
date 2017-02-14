@@ -180,22 +180,30 @@
             if(vm.objMods.modules[2].active) {
               getCurrency();
               repeatCurrency = $interval(function(){
+                //set currencyDiffs to false
+                vm.currencyFall = false;
+                vm.currencyRise = false;
+                vm.currencySame = false;
+                // set copy of currencyVal
                 vm.currOneValcopy = vm.currOneVal;
+                // update new values
                 getCurrency();
                 console.log(vm.currOneValcopy,vm.currOneVal);
+
+                //if old value is greater than new value, fall
+                if(vm.currOneValcopy > vm.currOneVal) {
+                  vm.currencyFall = true;
+                }
+                // if old value is less than new value, rise
+                if(vm.currOneValcopy < vm.currOneVal) {
+                  vm.currencyRise = true;
+                }
+                // values are equal
+                if(vm.currOneValcopy === vm.currOneVal) {
+                  vm.currencySame = true;
+                }
+
               }, 60000 * 60 * 12); //every six hours
-              vm.currencyFall = false;
-              vm.currencyRise = false;
-              vm.currencySame = false;
-              if(vm.currOneValcopy > vm.currOneVal) {
-                vm.currencyFall = true;
-              }
-              if(vm.currOneValcopy < vm.currOneVal) {
-                vm.currencyRise = true;
-              }
-              if(vm.currOneValcopy === vm.currOneVal) {
-                vm.currencySame = true;
-              }
             }
 
 
