@@ -8,6 +8,8 @@
   const runSequence = require('run-sequence');
 
   const clean = require('gulp-rimraf'); //does rm -rf
+
+  const bump = require('gulp-bump');
   const header = require('gulp-header'); //adds a header to file
   const pkg = require('./package.json');
 
@@ -126,6 +128,11 @@
       .pipe(connect.reload());
   });
 
+  gulp.task('bump', () => {
+    return gulp.src('./package.json')
+      .pipe(bump())
+      .pipe(gulp.dest('./'));
+  });
 
   gulp.task('watch', () => {
     gulp.watch(config.paths.html, ['html']);
