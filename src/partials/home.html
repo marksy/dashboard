@@ -2,18 +2,23 @@
   <h1 class="heading-2" ng-hide="true">home</h1>
   <img ng-src="{{photoURL}}" alt="{{displayName}}" title="{{displayName}}" class="user-avatar">
   <ul ng-show="authData">
-    <li class="panel columns" ng-class="{loading: loadingWeatherData}" ng-show="objMods.modules[0].active">
-      <div class="icon column">
+    <li class="panel columns" ng-show="weatherPanel">
+      <div class="icon column" ng-if="!weatherAPImaxedOut && !loadingWeatherData">
         <img ng-src="{{weatherData.condition.icon}}" alt="{{weatherData.condition.text}}" class="icon-weather">
       </div>
-      <div class="text column">
+      <div class="text column" ng-if="!weatherAPImaxedOut && !loadingWeatherData">
         <p>Current weather for {{weatherLocation}}</p>
         <p ng-if="objMods.modules[0].unit === 'c'">{{weatherData.condition.text}}, {{weatherData.temp_c}}˚c, wind {{weatherData.wind_kph}} kph<span ng-if="weatherData.precip_mm !== 0">, rain {{weatherData.precip_mm}}mm</span></p>
         <p ng-if="objMods.modules[0].unit === 'f'">{{weatherData.condition.text}}, {{weatherData.temp_f}}˚f, wind {{weatherData.wind_mph}} mph<span ng-if="weatherData.precip_in !== 0">, rain {{weatherData.precip_in}}"</span></p>
       </div>
-        <i class="icon-loading">loading...</i>
+      <div ng-if="weatherAPImaxedOut && !loadingWeatherData">
+        <p style="padding: 10px 1px;">Weather API has reached maximum calls for the period 😢</p>
+      </div>
+      <div class="loading-text" ng-if="loadingWeatherData">
+        <p>Loading weather...</p>
+      </div>
     </li>
-    <li class="panel" ng-show="objMods.modules[1].active">
+    <li class="panel" ng-show="tflPanel">
       <ul class="tube-status" ng-if="objMods.modules[1].tubeFaults">
         <li ng-repeat="line in tube" ng-if="line.lineStatuses[0].statusSeverityDescription !== 'Good Service'">
             <p><span class="tube-{{line.id}}">{{line.name}}</span> has {{line.lineStatuses[0].statusSeverityDescription}}</p>
@@ -31,7 +36,7 @@
     </div>
 
     </li>
-    <li class="panel" ng-show="objMods.modules[2].active">
+    <li class="panel" ng-show="currencyPanel">
       <p><span ng-if="baseCurrency === 'GBP'">&pound;</span><span ng-if="baseCurrency === 'EUR'">&euro;</span><span ng-if="baseCurrency === 'BGN'">лв.</span><span ng-if="baseCurrency === 'NZD' || baseCurrency === 'AUD' || baseCurrency === 'USD'">$</span>1 {{baseCurrency}} is trading at
         <span ng-if="currencyOne === 'GBP'">&pound;</span><span ng-if="currencyOne === 'EUR'">&euro;</span><span ng-if="currencyOne === 'BGN'">лв.</span><span ng-if="currencyOne === 'NZD' || currencyOne === 'AUD' || currencyOne === 'USD'">$</span>{{currOneVal}} {{currencyOne}} <i class="fa fa-caret-down failure"></i> and <span ng-if="currencyTwo === 'GBP'">&pound;</span><span ng-if="currencyTwo === 'EUR'">&euro;</span><span ng-if="currencyTwo === 'BGN'">лв</span><span ng-if="currencyTwo === 'NZD' || currencyTwo === 'AUD' || currencyTwo === 'USD'">$</span>{{currTwoVal}} {{currencyTwo}}
         <i class="fa fa-caret-up success"></i></p>
@@ -39,7 +44,7 @@
         <p ng-if="currencyFall">currencyFall {{currencyFall}}</p>
         <p ng-if="currencySame">currencySame {{currencySame}}</p> -->
     </li>
-    <li class="panel" ng-show="objMods.modules[3].active">
+    <li class="panel" ng-show="twitterPanel">
       <p>{{screenName}}</p>
       <ul>
         <li ng-if="loadingTweets">loading</li>
@@ -53,7 +58,7 @@
         </li>
       </ul>
     </li>
-    <li class="panel" ng-show="objMods.modules[4].active">
+    <li class="panel" ng-show="stravaPanel">
       <p>Latest Strava results for Mark</p>
       <ul class="activities">
         <li ng-repeat="activity in stravaData | limitTo: 2" class="activity">

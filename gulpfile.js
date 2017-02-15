@@ -8,6 +8,8 @@
   const runSequence = require('run-sequence');
 
   const clean = require('gulp-rimraf'); //does rm -rf
+  const header = require('gulp-header'); //adds a header to file
+  const pkg = require('./package.json');
 
   const babelify = require('babelify'); //es2015
   const browserify = require('browserify'); // Bundles JS
@@ -44,6 +46,15 @@
     fontIconsName: 'fonticons',
     prd: !!util.env.prd
   };
+
+  const banner = ['/**',
+  ' * <%= pkg.name %> - <%= pkg.description %>',
+  ' * @version v<%= pkg.version %>',
+  ' * @link <%= pkg.homepage %>',
+  ' * @author <%= pkg.author %>',
+  ' * @license <%= pkg.license %>',
+  ' */',
+  ''].join('\n');
 
 
   // create server
@@ -83,6 +94,7 @@
       .pipe(buffer())
       .pipe(config.prd ? util.noop() : sourcemaps.init({ loadMaps: true }))
       .pipe(config.prd ? uglify() : util.noop()) // Use any gulp plugins you want now
+      .pipe(header(banner, { pkg : pkg } ))
       .pipe(config.prd ? util.noop() : sourcemaps.write('./'))
       .pipe(gulp.dest(config.paths.dist + '/assets/scripts'))
       .pipe(connect.reload());

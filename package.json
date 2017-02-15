@@ -1,10 +1,11 @@
 {
-  "name": "dashboard",
+  "name": "Obsidian",
   "version": "1.0.0",
-  "description": "try make a deal with the devil",
-  "main": "index.js",
+  "description": "dashboard information panel",
+  "homepage": "http://cheersbro.com",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm-bump beta && gulp build"
   },
   "author": "Mark Chambers",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "gulp-autoprefixer": "^3.1.1",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^5.0.0",
+    "gulp-header": "^1.8.8",
     "gulp-jshint": "^2.0.2",
     "gulp-open": "^2.0.0",
     "gulp-plumber": "^1.1.0",

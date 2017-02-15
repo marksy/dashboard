@@ -38,6 +38,13 @@
             currentLocation = vm.objMods.modules[0].location;
             trainLine = vm.objMods.modules[1].lines;
 
+            vm.weatherPanel = vm.objMods.modules[0].active;
+            vm.tflPanel = vm.objMods.modules[1].active;
+            vm.currencyPanel = vm.objMods.modules[2].active;
+            vm.twitterPanel = vm.objMods.modules[3].active;
+            vm.stravaPanel = vm.objMods.modules[4].active;
+
+
             vm.$apply();
 
 
@@ -59,10 +66,12 @@
                   vm.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
                   vm.weatherData = response.data.current;
                   vm.loadingWeatherData = false;
+                  vm.weatherAPImaxedOut = false;
 
                 }, function(response) {
                   console.log('error', response);
                   vm.loadingWeatherData = false;
+                  vm.weatherAPImaxedOut = true;
                 });
             }
 
@@ -72,7 +81,7 @@
 
               repeatWeather = $interval(function(){
                 fetchForecastWeather();
-              }, 900000); //15 mins
+              }, 900000 * 8); //2 hours
             }
 
 
@@ -94,6 +103,7 @@
                 url: tflUrl
               }).then(function successCallback(data) {
                   if(data.data.length !== 0) {
+                    vm.dataNull = false;
                     vm.trainsArriving = data.data;
                     vm.stationName = data.data[0].stationName;
                   } else {
