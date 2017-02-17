@@ -8,7 +8,7 @@
   };
   firebase.initializeApp(config);
 
-  const app = angular.module('app', ['ui.router', 'firebase']);
+  const app = angular.module('app', ['ui.router', 'firebase', 'ngSanitize']);
 
   const dateTime = require('./utilities/dateTime.js');
   const cleanStation = require('./utilities/cleanStationName.js');

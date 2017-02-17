@@ -74,15 +74,15 @@
         <ul>
           <li>
             <label for="sub-item-base-currency">Base Currency:</label>
-            <input type="text" name="sub-item-base-currency" ng-change="updateModel()" ng-model="objMods.modules[2].baseCurrency" id="sub-item-base-currency" value="objMods.modules[2].localbaseCurrency" ng-disabled="!objMods.modules[2].active">
+            <input type="text" name="sub-item-base-currency" maxlength="3" ng-change="updateModel()" ng-model="objMods.modules[2].baseCurrency" id="sub-item-base-currency" value="objMods.modules[2].baseCurrency" ng-disabled="!objMods.modules[2].active">
           </li>
           <li>
             <label for="sub-item-currency-one">Currency 1:</label>
-            <input type="text" name="sub-item-currency-one" ng-change="updateModel()" ng-model="objMods.modules[2].currencyOne" id="sub-item-currency-one" value="objMods.modules[2].currencyOne" ng-disabled="!objMods.modules[2].active">
+            <input type="text" name="sub-item-currency-one" maxlength="3" ng-change="updateModel()" ng-model="objMods.modules[2].currencyOne" id="sub-item-currency-one" value="objMods.modules[2].currencyOne" ng-disabled="!objMods.modules[2].active">
           </li>
           <li>
             <label for="sub-item-currency-two">Currency 2:</label>
-            <input type="text" name="sub-item-currency-two" ng-change="updateModel()" ng-model="objMods.modules[2].currencyTwo" id="sub-item-currency-two" value="objMods.modules[2].currencyTwo" ng-disabled="!objMods.modules[2].active">
+            <input type="text" name="sub-item-currency-two" maxlength="3" ng-change="updateModel()" ng-model="objMods.modules[2].currencyTwo" id="sub-item-currency-two" value="objMods.modules[2].currencyTwo" ng-disabled="!objMods.modules[2].active">
           </li>
         </ul>
       </div>

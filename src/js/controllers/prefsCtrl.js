@@ -3,7 +3,7 @@
 
   const app = angular.module('app');
 
-  app.controller('PrefsController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$timeout', ($scope, $state, $firebaseAuth, $firebaseObject, $timeout) => {
+  app.controller('PrefsController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$timeout', '$sanitize', ($scope, $state, $firebaseAuth, $firebaseObject, $timeout, $sanitize) => {
 
     let vm = $scope;
 
@@ -153,6 +153,12 @@
         };
 
         vm.updateModel = function() {
+          $sanitize(vm.objMods.modules[0].location);
+          $sanitize(vm.objMods.modules[2].baseCurrency);
+          $sanitize(vm.objMods.modules[2].currencyOne);
+          $sanitize(vm.objMods.modules[2].currencyTwo);
+          $sanitize(vm.objMods.modules[3].user);
+
           const model = vm.objMods;
           firebase.database().ref('users/' + userId).set(model, onComplete);
         };
