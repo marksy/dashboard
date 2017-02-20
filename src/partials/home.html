@@ -48,7 +48,7 @@
       <p>{{screenName}}</p>
       <ul>
         <li ng-if="loadingTweets">loading</li>
-        <li ng-if="!loadingTweets" ng-repeat="tweet in tweets | limitTo: 5" class="tweet">
+        <li ng-if="!loadingTweets" ng-repeat="tweet in tweets | limitTo: 5" on-finish-render="ngRepeatFinished" class="tweet">
           <p>
             <a href="{{tweet.entities.urls[0].expanded_url ? tweet.entities.urls[0].expanded_url : 'http://www.twitter.com/' + tweet.user.name + '/status/' + tweet.id_str}}" target="_blank">
               <twitter-links label="tweet.text"></twitter-links>

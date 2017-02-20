@@ -1,5 +1,7 @@
 .tweet {
   margin-bottom: 1em;
+  opacity: 0;
+  transition: opacity $speed / 2;
 
   a {
     text-decoration: none;
@@ -8,5 +10,9 @@
   .date-time {
     font-size: .8em;
     opacity: .6;
+  }
+
+  &.fade-in {
+    opacity: 1;
   }
 }

@@ -221,7 +221,21 @@
             }
 
 
+            vm.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+              let tweets = document.querySelectorAll('.tweet');
 
+              let timerun = function(tweetIndex,tweetNode) {
+                $timeout(function() {
+                  tweetNode.classList.add('fade-in');
+                }, tweetIndex * 100);
+              };
+
+              for(const tweet of tweets.entries()) {
+                let tweetIndex = tweet[0];
+                let tweetNode = tweet[1];
+                timerun(tweetIndex, tweetNode);
+              }
+            });
 
 
             const cb = new Codebird();

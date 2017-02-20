@@ -15,6 +15,7 @@
   const cleanLine = require('./utilities/cleanLineName.js');
   const twitterLinks = require('./utilities/twitterLinks.js');
   const twitterDate = require('./utilities/twitterDate.js');
+  const onFinishRender = require('./utilities/onFinishRender.js');
 
   const MyCtrl = require('./controllers/myCtrl.js');
   const HomeCtrl = require('./controllers/homeCtrl.js');
