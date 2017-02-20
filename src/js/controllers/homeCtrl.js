@@ -1,9 +1,9 @@
-(function() {
+(() => {
   'use strict';
 
   let app = angular.module('app');
 
-  app.controller('HomeController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', '$timeout', function($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce, $timeout) {
+  app.controller('HomeController', ['$scope', '$state', '$firebaseAuth', '$firebaseObject', '$http', '$interval', '$sce', '$timeout', ($scope, $state, $firebaseAuth, $firebaseObject, $http, $interval, $sce, $timeout) => {
 
     let vm = $scope;
 
@@ -11,7 +11,7 @@
     let currentLocation;
     let trainLine;
 
-    auth.$onAuthStateChanged(function(authData) {
+    auth.$onAuthStateChanged((authData) => {
       vm.authData = authData;
 
       let repeatWeather;
@@ -28,11 +28,11 @@
         vm.displayName = authData.providerData[0].displayName;
         vm.photoURL = authData.providerData[0].photoURL;
 
-        let getUserData = function() {
+        let getUserData = () => {
           let currentUser = firebase.database().ref().child('/users/' + userId);
           let userExists = $firebaseObject(firebase.database().ref().child('/users/' + userId));
 
-          return currentUser.once('value').then(function(data) {
+          return currentUser.once('value').then((data) => {
             vm.objMods = data.val();
 
             currentLocation = vm.objMods.modules[0].location;
@@ -62,13 +62,13 @@
               $http({
                 method: 'GET',
                 url: forecastWeatherUrl
-              }).then(function(response) {
+              }).then((response) => {
                   vm.weatherLocation = response.data.location.name + ', ' + response.data.location.country;
                   vm.weatherData = response.data.current;
                   vm.loadingWeatherData = false;
                   vm.weatherAPImaxedOut = false;
 
-                }, function(response) {
+                }, (response) => {
                   console.log('error', response);
                   vm.loadingWeatherData = false;
                   vm.weatherAPImaxedOut = true;
@@ -79,7 +79,7 @@
             if(vm.objMods.modules[0].active) {
               fetchForecastWeather();
 
-              repeatWeather = $interval(function(){
+              repeatWeather = $interval(() => {
                 fetchForecastWeather();
               }, 900000 * 8); //2 hours
             }
@@ -101,11 +101,11 @@
               $http({
                 method: 'GET',
                 url: tflUrl
-              }).then(function successCallback(data) {
-                  if(data.data.length !== 0) {
+              }).then(function successCallback(response) {
+                  if(response.data.length !== 0) {
                     vm.dataNull = false;
-                    vm.trainsArriving = data.data;
-                    vm.stationName = data.data[0].stationName;
+                    vm.trainsArriving = response.data;
+                    vm.stationName = response.data[0].stationName;
                   } else {
                     vm.dataNull = true;
                   }
@@ -116,8 +116,8 @@
               $http({
                 method: 'GET',
                 url: tube
-              }).then(function successCallback(data) {
-                vm.tube = data.data;
+              }).then(function successCallback(response) {
+                vm.tube = response.data;
               }, function errorCallback(error) {
                 console.log('error', error);
               });
@@ -127,7 +127,7 @@
             if(vm.objMods.modules[1].active) {
               getTFLStatus();
 
-              repeatTFL = $interval(function(){
+              repeatTFL = $interval(() => {
                 // fetchCurrentWeather();
                 getTFLStatus();
               }, 60000); // every minute
@@ -144,9 +144,9 @@
               $http({
                 method: 'GET',
                 url: stravaUrl
-              }).then(function(response) {
+              }).then((response) => {
                   vm.stravaData = response.data;
-                }, function(response) {
+                }, (response) => {
                   console.log('stravaUrl fail',response);
               });
             }
@@ -155,7 +155,7 @@
             if(vm.objMods.modules[4].active) {
               getStrava();
 
-              repeatStrava = $interval(function(){
+              repeatStrava = $interval(() => {
                 getStrava();
               }, 60000 * (60 * 6));//every 6 hours
             }
@@ -177,11 +177,11 @@
               $http({
                 method: 'GET',
                 url: financeLatest
-              }).then(function(response) {
+              }).then((response) => {
                 vm.currOneVal = response.data.rates[vm.currencyOne];
                 vm.currTwoVal = response.data.rates[vm.currencyTwo];
                 console.log('getCurrency vm.currOneVal: ',vm.currOneVal);
-              }, function(response) {
+              }, (response) => {
                 console.log('error', response);
               });
             }
@@ -189,7 +189,7 @@
             // if currency is active
             if(vm.objMods.modules[2].active) {
               getCurrency();
-              repeatCurrency = $interval(function(){
+              repeatCurrency = $interval(() => {
                 //set currencyDiffs to false
                 vm.currencyFall = false;
                 vm.currencyRise = false;
@@ -235,10 +235,10 @@
               vm.loadingTweets = true;
               cb.__call('statuses_userTimeline', {
                 screen_name: vm.screenName
-              }, function (data) {
-      						vm.$apply(function () {
+              }, function (response) {
+      						vm.$apply(() => {
                     vm.loadingTweets = false;
-      							vm.tweets = data;
+      							vm.tweets = response;
       						});
       					}
       				);
@@ -248,10 +248,9 @@
             // if twitter is active
             if(vm.objMods.modules[3].active) {
               twitter();
-              repeatTweet = $interval(function(){
+              repeatTweet = $interval(() => {
                 twitter();
               }, 60000 * 5); // 5 mins
-
             }
 
           }).catch(function(error) {
@@ -263,7 +262,7 @@
       }
 
       // destroy intervals on state change
-      $scope.$on('$destroy', function(){
+      $scope.$on('$destroy', () => {
         $interval.cancel(repeatWeather);
         $interval.cancel(repeatTFL);
         $interval.cancel(repeatStrava);

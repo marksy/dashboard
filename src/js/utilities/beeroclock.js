@@ -64,6 +64,9 @@
     msg === "Beer o'clock in 1 minute" ) {
       msg = "HOLY SHIT. Beer o'clock <span class='flash'>in a few minutes!!!!!!1🍻🍻</span>🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺";
     }
+    if(msg === "Beer o'clock in a few seconds") {
+      msg = "Beer o'clock <span class='flash'>right now!!! 🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺🍺</span>";
+    }
 
     setTimeout(function() {
       beer.innerHTML = msg;
