@@ -39,3 +39,11 @@
   //   color: $tube-waterloo-city;
   // }
 }
+.train {
+  opacity: 0;
+  transition: opacity $speed / 2;
+
+  &.fade-in {
+    opacity: 1;
+  }
+}

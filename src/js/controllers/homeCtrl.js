@@ -47,6 +47,22 @@
 
             vm.$apply();
 
+            let timerun = function(i,n) {
+              $timeout(function() {
+                n.classList.add('fade-in');
+              }, i * 100);
+            };
+
+            vm.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+              let staggers = document.querySelectorAll('.stagger');
+
+              for(const stagger of staggers.entries()) {
+                let i = stagger[0];
+                let n = stagger[1];
+                timerun(i, n);
+              }
+            });
+
 
 
 
@@ -97,6 +113,7 @@
             let tube = 'https://api.tfl.gov.uk/line/mode/tube/status' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
 
             function getTFLStatus() {
+              console.log('getting trains');
               // get trains
               $http({
                 method: 'GET',
@@ -106,6 +123,22 @@
                     vm.dataNull = false;
                     vm.trainsArriving = response.data;
                     vm.stationName = response.data[0].stationName;
+
+                    //
+                    let trains;
+                    //
+                    $timeout(function() {
+                      trains = document.querySelectorAll('.train');
+                      console.log('trains',trains);
+
+                      for(const stagger of trains.entries()) {
+                        let i = stagger[0];
+                        let n = stagger[1];
+                        timerun(i, n);
+                      }
+                    });
+
+
                   } else {
                     vm.dataNull = true;
                   }
@@ -221,21 +254,6 @@
             }
 
 
-            vm.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-              let tweets = document.querySelectorAll('.tweet');
-
-              let timerun = function(tweetIndex,tweetNode) {
-                $timeout(function() {
-                  tweetNode.classList.add('fade-in');
-                }, tweetIndex * 100);
-              };
-
-              for(const tweet of tweets.entries()) {
-                let tweetIndex = tweet[0];
-                let tweetNode = tweet[1];
-                timerun(tweetIndex, tweetNode);
-              }
-            });
 
 
             const cb = new Codebird();

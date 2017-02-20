@@ -1,0 +1,8 @@
+.stagger {
+  opacity: 0;
+  transition: opacity $speed / 2;
+
+  &.fade-in {
+    opacity: 1;
+  }
+}

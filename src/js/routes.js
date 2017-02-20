@@ -6,7 +6,7 @@
   app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider) {
 
     $urlRouterProvider.otherwise('/');
-    $compileProvider.debugInfoEnabled(false);
+    $compileProvider.debugInfoEnabled(true);
     $locationProvider.html5Mode(false);
 
     let states = [

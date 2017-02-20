@@ -10,6 +10,7 @@
         if (scope.$last === true) {
           $timeout(function () {
             scope.$emit(attr.onFinishRender);
+            console.log('finished render of list');
           });
         }
       }

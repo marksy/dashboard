@@ -28,8 +28,7 @@
         <p ng-if="!dataNull">Next trains from {{stationName}}</p>
         <blockquote class="blockquote" ng-if="dataNull">TFL is having trouble sending <em>train station</em> data currently 🙄</blockquote>
       <ul>
-        <!-- track by $index doing weird things to the ng-if -->
-        <li ng-repeat="train in trainsArriving | orderBy: 'timeToStation' track by $index" ng-if="train.direction === 'inbound'">
+        <li ng-repeat="train in trainsArriving | orderBy: 'timeToStation' track by $index" class="train" ng-if="train.direction === 'inbound'">
           <p><clean-station label="train.destinationName"></clean-station>  (<clean-line label="train.lineName"></clean-line>) expected at {{train.expectedArrival | date:'HH:mm'}} on {{train.platformName}}</p>
         </li>
       </ul>
@@ -47,8 +46,8 @@
     <li class="panel" ng-show="twitterPanel">
       <p>{{screenName}}</p>
       <ul>
-        <li ng-if="loadingTweets">loading</li>
-        <li ng-if="!loadingTweets" ng-repeat="tweet in tweets | limitTo: 5" on-finish-render="ngRepeatFinished" class="tweet">
+        <li ng-if="loadingTweets"><p>loading...</p></li>
+        <li ng-if="!loadingTweets" ng-repeat="tweet in tweets | limitTo: 5" class="tweet stagger" on-finish-render="ngRepeatFinished">
           <p>
             <a href="{{tweet.entities.urls[0].expanded_url ? tweet.entities.urls[0].expanded_url : 'http://www.twitter.com/' + tweet.user.name + '/status/' + tweet.id_str}}" target="_blank">
               <twitter-links label="tweet.text"></twitter-links>
