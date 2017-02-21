@@ -113,7 +113,6 @@
             let tube = 'https://api.tfl.gov.uk/line/mode/tube/status' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
 
             function getTFLStatus() {
-              console.log('getting trains');
               // get trains
               $http({
                 method: 'GET',
@@ -129,7 +128,6 @@
                     //
                     $timeout(function() {
                       trains = document.querySelectorAll('.train');
-                      console.log('trains',trains);
 
                       for(const stagger of trains.entries()) {
                         let i = stagger[0];
@@ -213,7 +211,6 @@
               }).then((response) => {
                 vm.currOneVal = response.data.rates[vm.currencyOne];
                 vm.currTwoVal = response.data.rates[vm.currencyTwo];
-                console.log('getCurrency vm.currOneVal: ',vm.currOneVal);
               }, (response) => {
                 console.log('error', response);
               });
@@ -231,8 +228,6 @@
                 vm.currOneValcopy = vm.currOneVal;
                 // update new values
                 getCurrency();
-                console.log("repeatCurrency vm.currOneVal",vm.currOneVal);
-                console.log("repeatCurrency vm.currOneValcopy", vm.currOneValcopy);
 
                 //if old value is greater than new value, fall
                 if(vm.currOneValcopy > vm.currOneVal) {
