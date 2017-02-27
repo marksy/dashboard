@@ -92,7 +92,7 @@
             }
 
             // if weather is active
-            if(vm.objMods.modules[0].active) {
+            if(vm.weatherPanel) {
               fetchForecastWeather();
 
               repeatWeather = $interval(() => {
@@ -155,7 +155,7 @@
             }
 
             // if TFL is active
-            if(vm.objMods.modules[1].active) {
+            if(vm.tflPanel) {
               getTFLStatus();
 
               repeatTFL = $interval(() => {
@@ -183,7 +183,7 @@
             }
 
             // if strava is active
-            if(vm.objMods.modules[4].active) {
+            if(vm.stravaPanel) {
               getStrava();
 
               repeatStrava = $interval(() => {
@@ -217,7 +217,7 @@
             }
 
             // if currency is active
-            if(vm.objMods.modules[2].active) {
+            if(vm.currencyPanel) {
               getCurrency();
               repeatCurrency = $interval(() => {
                 //set currencyDiffs to false
@@ -273,7 +273,7 @@
 
 
             // if twitter is active
-            if(vm.objMods.modules[3].active) {
+            if(vm.twitterPanel) {
               twitter();
               repeatTweet = $interval(() => {
                 twitter();

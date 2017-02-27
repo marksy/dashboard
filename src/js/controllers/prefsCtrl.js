@@ -109,6 +109,11 @@
                     active: false,
                     key: "54b0e167486e9e58b52d9b1a73b5471e24c5cf58"
                   }
+                  // ,
+                  // {
+                  //   name: "notes",
+                  //   data: []
+                  // }
                 ]
               };
               firebase.database().ref('users/' + userId).set(vm.objMods, onCreate);

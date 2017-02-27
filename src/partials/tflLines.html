@@ -1,0 +1,14 @@
+<ul class="tube-status" ng-if="objMods.modules[1].tubeFaults">
+  <li ng-repeat="line in tube" ng-if="line.lineStatuses[0].statusSeverityDescription !== 'Good Service'">
+      <p><span class="tube-{{line.id}}">{{line.name}}</span> has {{line.lineStatuses[0].statusSeverityDescription}}</p>
+  </li>
+</ul>
+<div ng-show="objMods.modules[1].lines[0].origin !== ''">
+  <p ng-if="!dataNull">Next trains from {{stationName}}</p>
+  <blockquote class="blockquote" ng-if="dataNull">TFL is having trouble sending <em>train station</em> data currently 🙄</blockquote>
+  <ul>
+    <li ng-repeat="train in trainsArriving | orderBy: 'timeToStation' track by $index" class="train" ng-if="train.direction === 'inbound'">
+      <p><clean-station label="train.destinationName"></clean-station>  (<clean-line label="train.lineName"></clean-line>) expected at {{train.expectedArrival | date:'HH:mm'}} on {{train.platformName}}</p>
+    </li>
+  </ul>
+</div>
