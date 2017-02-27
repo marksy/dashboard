@@ -67,7 +67,7 @@
 
 
 
-            const key = 'a01445a972f04947b49150500172701';
+            const key = 'afe63dfdbc9e4881bae163028172702';
             if(currentLocation === undefined) {
               currentLocation = 'London';
             }
@@ -128,7 +128,6 @@
                     //
                     $timeout(function() {
                       trains = document.querySelectorAll('.train');
-
                       for(const stagger of trains.entries()) {
                         let i = stagger[0];
                         let n = stagger[1];
