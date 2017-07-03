@@ -89,7 +89,7 @@
         debug: true
     });
 
-    bundler.transform(babelify, {presets: ["es2015"]});
+    bundler.transform(babelify, {presets: ['es2015']});
     bundler.bundle()
       .on('error', (err) => { console.error(err); })
       .pipe(source('bundle.js'))
