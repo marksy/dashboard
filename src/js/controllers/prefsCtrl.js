@@ -50,6 +50,10 @@
         code: "910GHONROPK",
       },
       {
+        name: "Charing Cross",
+        code: "910GCHRX"
+      },
+      {
         name: "Catford",
         code: "910GCATFORD",
       },
