@@ -43,3 +43,6 @@ Thumbs.db
 ###########
 node_modules/
 dist/
+
+# Custom files #
+src/js/config.js

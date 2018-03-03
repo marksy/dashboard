@@ -1,10 +1,12 @@
+import secret from './config';
+
 (function() {
   'use strict';
 
   const config = {
-    apiKey: "AIzaSyC_exNmuiarHa5hLjmAocQrh32fB-0vJE0",
-    authDomain: "obsidian-5b285.firebaseapp.com",
-    databaseURL: "https://obsidian-5b285.firebaseio.com"
+    apiKey: secret.apiKey,
+    authDomain: secret.authDomain,
+    databaseURL: secret.databaseURL
   };
   firebase.initializeApp(config);
 
@@ -26,6 +28,7 @@
   const routes = require('./routes.js');
 
   const beerOclock = require('./utilities/beeroclock.js');
+  const brexit = require('./utilities/brexit.js');
 
 
 })();
