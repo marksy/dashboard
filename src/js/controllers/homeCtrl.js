@@ -64,6 +64,7 @@
             });
 
 
+            // let weatherCtrl = require('./weather.ctrl.js');
 
 
 
@@ -112,6 +113,8 @@
             let tflUrl = 'https://api.tfl.gov.uk/' + tflMode + '/' + tflStopPoint + '/arrivals' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
             let tube = 'https://api.tfl.gov.uk/line/mode/tube/status' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
 
+            console.log('tflUrl', tflUrl);
+
             function getTFLStatus() {
               // get trains
               $http({
@@ -119,13 +122,12 @@
                 url: tflUrl
               }).then(function successCallback(response) {
                   if(response.data.length !== 0) {
+                    console.log('success');
                     vm.dataNull = false;
                     vm.trainsArriving = response.data;
                     vm.stationName = response.data[0].stationName;
 
-                    //
                     let trains;
-                    //
                     $timeout(function() {
                       trains = document.querySelectorAll('.train');
                       for(const stagger of trains.entries()) {
@@ -135,9 +137,10 @@
                       }
                     });
 
-
+                    // TFL no-data error (soft error)
                   } else {
                     vm.dataNull = true;
+                    console.log('fail', response);
                   }
                 }, function errorCallback(error) {
                   console.log('error', error);
