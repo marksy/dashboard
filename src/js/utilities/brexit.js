@@ -11,7 +11,7 @@
 
   function howLongTilWeBrexit() {
 
-    let leaveDate = new Date('2018-04-05T18:00:00Z');
+    let leaveDate = new Date('2018-05-05T18:00:00Z');
     leaveDate = moment(leaveDate);
 
     let today = new Date();
