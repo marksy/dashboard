@@ -110,8 +110,8 @@
             if(tflStopPoint === undefined) {
               tflStopPoint = '910GFORESTH';
             }
-            let tflUrl = 'https://api.tfl.gov.uk/' + tflMode + '/' + tflStopPoint + '/arrivals' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
-            let tube = 'https://api.tfl.gov.uk/line/mode/tube/status' + '?app_id=' + tflAppId + '&app_key=' + tflAppKey;
+            let tflUrl = `https://api.tfl.gov.uk/${tflMode}/${tflStopPoint}/arrivals?app_id=${tflAppId}&app_key=${tflAppKey}`;
+            let tube = `https://api.tfl.gov.uk/line/mode/tube/status?app_id=${tflAppId}&app_key=${tflAppKey}`;
 
             console.log('tflUrl', tflUrl);
 
@@ -126,6 +126,7 @@
                     vm.dataNull = false;
                     vm.trainsArriving = response.data;
                     vm.stationName = response.data[0].stationName;
+                    console.log(response);
 
                     let trains;
                     $timeout(function() {
