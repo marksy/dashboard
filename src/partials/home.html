@@ -30,13 +30,13 @@
         <p style="margin-top: 12px">Southbound:</p>
         <ul>
           <li ng-repeat="train in trainsArriving | orderBy: 'timeToStation' track by $index" class="train" ng-if="train.direction === 'outbound'">
-            <p><clean-station label="train.destinationName"></clean-station>  (<clean-line label="train.lineName"></clean-line>) expected at {{train.expectedArrival | date:'HH:mm'}} on {{train.platformName}}</p>
+            <p>{{train.expectedArrival | date:'HH:mm'}} to <clean-station label="train.destinationName"></clean-station> on {{train.platformName === 'Platform Unknown' ? '-' : train.platformName}}</p>
           </li>
         </ul>
         <p style="margin-top: 12px">Northbound:</p>
         <ul>
           <li ng-repeat="train in trainsArriving | orderBy: 'timeToStation' track by $index" class="train" ng-if="train.direction === 'inbound'">
-            <p><clean-station label="train.destinationName"></clean-station>  (<clean-line label="train.lineName"></clean-line>) expected at {{train.expectedArrival | date:'HH:mm'}} on {{train.platformName}}</p>
+            <p>{{train.expectedArrival | date:'HH:mm'}} to <clean-station label="train.destinationName"></clean-station> on {{train.platformName === 'Platform Unknown' ? '-' : train.platformName}}</p>
           </li>
         </ul>
       </div>
