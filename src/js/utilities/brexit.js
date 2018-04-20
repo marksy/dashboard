@@ -9,22 +9,21 @@
   const moment = require('moment');
   const brexit = document.getElementById("brexit");
 
-  function howLongTilWeBrexit() {
+  function howLongTilWeBrexit(yeah) {
 
-    let leaveDate = new Date('2018-04-05T18:00:00Z');
+    let leaveDate = new Date(yeah);
     leaveDate = moment(leaveDate);
 
     let today = new Date();
     today = moment(today);
 
     const daysRemaining = leaveDate.diff(today, 'days');
-    console.log('daysRemaining',daysRemaining);
 
     brexit.innerHTML = `Just ${daysRemaining} days remaining in UK 🇬🇧`;
 
   }
 
-    howLongTilWeBrexit();
+    howLongTilWeBrexit('2018-05-05T18:00:00Z');
 
 
 })();

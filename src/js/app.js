@@ -3,11 +3,20 @@ import secret from './config';
 (function() {
   'use strict';
 
+  const angular = require('angular');
+  const angularSanitize = require('angular-sanitize');
+  const angularAnimate = require('angular-animate');
+  const angularUIRouter = require('angular-ui-router');
+  const firebase = require('firebase');
+  const angularfire = require('angularfire');
+
+
   const config = {
     apiKey: secret.apiKey,
     authDomain: secret.authDomain,
     databaseURL: secret.databaseURL
   };
+
   firebase.initializeApp(config);
 
   const app = angular.module('app', ['ui.router', 'firebase', 'ngSanitize', 'ngAnimate']);
